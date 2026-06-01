@@ -322,7 +322,7 @@
             });
         }
 
-        // Fungsi Inti Routing Halaman (Beranda vs Nonton)
+                // Fungsi Inti Routing Halaman (Beranda vs Nonton)
         function handleRouting() {
             const hash = window.location.hash;
             const homeView = document.getElementById('home-view');
@@ -331,15 +331,11 @@
             const watchTitle = document.getElementById('watch-title');
 
             if (hash.startsWith('#watch')) {
-                // Sembunyikan beranda, tampilkan halaman nonton
                 homeView.style.display = 'none';
                 watchView.style.display = 'block';
 
-                // Ambil ID video dari parameter URL hash
                 const urlParams = new URLSearchParams(hash.split('?')[1]);
                 const videoId = urlParams.get('v');
-                
-                // Cari data video berdasarkan ID
                 const currentVideo = videoData.find(v => v.id === videoId);
 
                 if (currentVideo) {
@@ -348,24 +344,36 @@
                     document.title = currentVideo.title + " - " + namaKoleksi;
                 }
                 
-                // Muat daftar video lain di bawah halaman nonton
+                // === TRIK REFRESH IKLAN BANNER DI SINI ===
+                const tempatIklan = document.getElementById('iklan-space');
+                
+                // Masukkan ulang kode script banner Anda di sini menggunakan innerHTML
+                // Setiap kali ganti video, kode di bawah ini akan dieksekusi ulang oleh browser
+                tempatIklan.innerHTML = `
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'KODE_KEY_IKLAN_ANDA',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/KODE_KEY_IKLAN_ANDA/invoke.js"></script>
+                `;
+                // =========================================
+
                 renderVideos(document.getElementById('video-list-watch'));
             } else {
-                // Tampilkan beranda, sembunyikan halaman nonton
                 homeView.style.display = 'block';
                 watchView.style.display = 'none';
-                
-                // Matikan player saat kembali ke beranda agar suara hilang
                 mainPlayer.src = ''; 
                 document.title = namaKoleksi;
-
-                // Muat daftar video di beranda
                 renderVideos(document.getElementById('video-list-home'));
             }
-            // Mengembalikan posisi scroll ke paling atas otomatis saat ganti video
             window.scrollTo(0, 0);
         }
-
+    
         // Jalankan routing saat hash url berubah atau halaman dimuat pertama kali
         window.addEventListener('hashchange', handleRouting);
         window.addEventListener('DOMContentLoaded', handleRouting);
