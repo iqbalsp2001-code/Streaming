@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koleksi Video</title>
+    <style>
+        /* --- KELOLA MODERASI GAYA/TAMPILAN DISINI (CSS) --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a; /* Warna latar belakang gelap ala platform streaming */
+            color: #f8fafc;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- HALAMAN BERANDA: PROFIL --- */
+        .profile-header {
+            text-align: center;
+            padding: 40px 0 20px 0;
+        }
+
+        .profile-header img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3b82f6;
+            margin-bottom: 15px;
+        }
+
+        .profile-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .profile-header p {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        /* --- DAFTAR VIDEO (LIST MENURUN) --- */
+        .video-section-title {
+            font-size: 18px;
+            margin: 25px 0 15px 0;
+            color: #3b82f6;
+            border-left: 4px solid #3b82f6;
+            padding-left: 10px;
+        }
+
+        .video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .video-item {
+            display: flex;
+            background-color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 1px solid #334155;
+        }
+
+        .video-item:hover {
+            transform: translateY(-2px);
+            background-color: #334155;
+        }
+
+        .video-thumbnail-wrapper {
+            position: relative;
+            width: 180px;
+            min-width: 180px;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 12px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .video-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* --- HALAMAN NONTON (WATCH VIEW) --- */
+        #watch-view {
+            display: none;
+            padding-top: 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        .player-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .watch-video-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 15px 0;
+            line-height: 1.4;
+        }
+
+        /* --- AREA TEMPAT PASANG IKLAN --- */
+        .ad-container {
+            width: 100%;
+            background-color: #1e293b;
+            border: 2px dashed #475569;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* Responsive untuk HP Layar Kecil */
+        @media (max-width: 480px) {
+            .video-item {
+                flex-direction: column;
+            }
+            .video-thumbnail-wrapper {
+                width: 100%;
+                min-width: 100%;
+            }
+            .video-info {
+                padding: 10px;
+            }
+            .video-title {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="home-view">
+            <div class="profile-header">
+                <img src="https://via.placeholder.com/150" alt="Foto Profil">
+                <h1 id="collection-name">Nama Koleksi Video</h1>
+                <p id="collection-desc">Kumpulan video pilihan terbaik dari Google Drive</p>
+            </div>
+
+            <h2 class="video-section-title">Daftar Video Terbaru</h2>
+            <div id="video-list-home" class="video-list"></div>
+        </div>
+
+
+        <div id="watch-view">
+            <a href="#home" class="back-btn">← Kembali ke Beranda</a>
+            
+            <div class="player-container">
+                <iframe id="main-player" src="" allow="autoplay" allowfullscreen></iframe>
+            </div>
+
+            <h1 id="watch-title" class="watch-video-title">Judul Video</h1>
+
+            <div class="ad-container">
+                <p style="margin-bottom: 5px; font-weight: bold; color: #64748b;">SPONSOR ADVERTISEMENT</p>
+                <div id="iklan-space">
+                    <p>Tempat Kode Iklan Anda Akan Muncul Saat Video Diputar</p>
+                </div>
+            </div>
+
+            <h2 class="video-section-title">Video Lainnya</h2>
+            <div id="video-list-watch" class="video-list"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. ISI NAMA KOLEKSI ANDA DISINI
+        const namaKoleksi = "Koleksi Sinema Saya";
+        const deskripsiKoleksi = "Streaming lancar langsung dari Drive pribadi";
+
+        // 2. KELOLA DATA VIDEO DI SINI (Cukup Edit di Sini 1x Saja!)
+        // Anda bisa menambah, mengurangi, atau mengganti isinya hingga 10 video atau lebih.
+        const videoData = [
+            {
+                id: "vid-01",
+                title: "Cara Optimasi Performa Komputer Windows 11 Terbaru",
+                thumbnail: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=600&auto=format&fit=crop",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_1/preview"
+            },
+            {
+                id: "vid-02",
+                title: "Setup PC Gaming Minimalis Menggunakan Liquid Cooling AIO",
+                thumbnail: "https://images.unsplash.com/photo-1547119957-637f8679db1e?w=600&auto=format&fit=crop",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_2/preview"
+            },
+            {
+                id: "vid-03",
+                title: "Review Kupas Tuntas Kecepatan NVMe SSD Gen 4",
+                thumbnail: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600&auto=format&fit=crop",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_3/preview"
+            },
+            {
+                id: "vid-04",
+                title: "Video Tutorial Pembelajaran Bagian 4",
+                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+4",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_4/preview"
+            },
+            {
+                id: "vid-05",
+                title: "Video Dokumenter Keren File 5",
+                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+5",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_5/preview"
+            },
+            {
+                id: "vid-06",
+                title: "Koleksi Video Menarik Bagian 6",
+                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+6",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_6/preview"
+            },
+            {
+                id: "vid-07",
+                title: "Tutorial Pemrograman Web Pemula 7",
+                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+7",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_7/preview"
+            },
+            {
+                id: "vid-08",
+                title: "Cinematic Video Pendek Eksperimen 8",
+                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+8",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_8/preview"
+            },
+            {
+                id: "vid-09",
+                title: "Tips & Trik Mengelola Penyimpanan Google Drive 9",
+                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+9",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_9/preview"
+            },
+            {
+                id: "vid-10",
+                title: "Video Penutup List Koleksi Terakhir 10",
+                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+10",
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_10/preview"
+            }
+        ];
+
+        // Aplikasi Inisialisasi Teks Utama
+        document.getElementById('collection-name').innerText = namaKoleksi;
+        document.getElementById('collection-desc').innerText = deskripsiKoleksi;
+
+        // Fungsi Render List Video ke Element Spesifik
+        function renderVideos(containerElement) {
+            containerElement.innerHTML = '';
+            videoData.forEach(video => {
+                const videoLink = document.createElement('a');
+                videoLink.href = `#watch?v=${video.id}`;
+                videoLink.className = 'video-item';
+                videoLink.innerHTML = `
+                    <div class="video-thumbnail-wrapper">
+                        <img class="video-thumbnail" src="${video.thumbnail}" alt="${video.title}" loading="lazy">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${video.title}</h3>
+                    </div>
+                `;
+                containerElement.appendChild(videoLink);
+            });
+        }
+
+        // Fungsi Inti Routing Halaman (Beranda vs Nonton)
+        function handleRouting() {
+            const hash = window.location.hash;
+            const homeView = document.getElementById('home-view');
+            const watchView = document.getElementById('watch-view');
+            const mainPlayer = document.getElementById('main-player');
+            const watchTitle = document.getElementById('watch-title');
+
+            if (hash.startsWith('#watch')) {
+                // Sembunyikan beranda, tampilkan halaman nonton
+                homeView.style.display = 'none';
+                watchView.style.display = 'block';
+
+                // Ambil ID video dari parameter URL hash
+                const urlParams = new URLSearchParams(hash.split('?')[1]);
+                const videoId = urlParams.get('v');
+                
+                // Cari data video berdasarkan ID
+                const currentVideo = videoData.find(v => v.id === videoId);
+
+                if (currentVideo) {
+                    mainPlayer.src = currentVideo.driveUrl;
+                    watchTitle.innerText = currentVideo.title;
+                    document.title = currentVideo.title + " - " + namaKoleksi;
+                }
+                
+                // Muat daftar video lain di bawah halaman nonton
+                renderVideos(document.getElementById('video-list-watch'));
+            } else {
+                // Tampilkan beranda, sembunyikan halaman nonton
+                homeView.style.display = 'block';
+                watchView.style.display = 'none';
+                
+                // Matikan player saat kembali ke beranda agar suara hilang
+                mainPlayer.src = ''; 
+                document.title = namaKoleksi;
+
+                // Muat daftar video di beranda
+                renderVideos(document.getElementById('video-list-home'));
+            }
+            // Mengembalikan posisi scroll ke paling atas otomatis saat ganti video
+            window.scrollTo(0, 0);
+        }
+
+        // Jalankan routing saat hash url berubah atau halaman dimuat pertama kali
+        window.addEventListener('hashchange', handleRouting);
+        window.addEventListener('DOMContentLoaded', handleRouting);
+    </script>
+</body>
+</html>
