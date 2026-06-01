@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koleksi Video</title>
     <style>
-        /* --- KELOLA MODERASI GAYA/TAMPILAN DISINI (CSS) --- */
+        /* --- KELOLA GAYA UTAMA WEB (CSS) --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #0f172a; /* Warna latar belakang gelap ala platform streaming */
+            background-color: #0f172a; /* Warna latar belakang gelap */
             color: #f8fafc;
             padding-bottom: 50px;
         }
@@ -156,21 +156,34 @@
         .watch-video-title {
             font-size: 20px;
             font-weight: 700;
-            margin: 15px 0;
+            margin: 15px 0 5px 0; /* Jarak bawah dikecilkan agar dekat dengan tombol download */
             line-height: 1.4;
         }
 
-        /* --- AREA TEMPAT PASANG IKLAN --- */
-        .ad-container {
+        /* --- STYLING UNTUK TOMBOL SMARTLINK DOWNLOAD (GABUNGAN KODE ANDA) --- */
+        .smartlink-btn {
+            display: block;
             width: 100%;
-            background-color: #1e293b;
-            border: 2px dashed #475569;
-            border-radius: 8px;
-            padding: 20px;
+            max-width: 100%; /* Disesuaikan otomatis dengan kontainer video */
+            margin: 15px auto 25px auto;
+            background: linear-gradient(90deg, #e50914 0%, #b20710 100%);
+            color: #ffffff !important;
             text-align: center;
-            margin: 20px 0;
-            color: #94a3b8;
-            font-size: 13px;
+            text-decoration: none;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(229, 09, 20, 0.4);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .smartlink-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(229, 09, 20, 0.7);
+            background: linear-gradient(90deg, #ff1723 0%, #d80b15 100%);
         }
 
         /* Responsive untuk HP Layar Kecil */
@@ -186,6 +199,10 @@
                 padding: 10px;
             }
             .video-title {
+                font-size: 14px;
+            }
+            .smartlink-btn {
+                padding: 14px 15px;
                 font-size: 14px;
             }
         }
@@ -216,12 +233,7 @@
 
             <h1 id="watch-title" class="watch-video-title">Judul Video</h1>
 
-            <div class="ad-container">
-                <p style="margin-bottom: 5px; font-weight: bold; color: #64748b;">SPONSOR ADVERTISEMENT</p>
-                <div id="iklan-space">
-                    <p>Tempat Kode Iklan Anda Akan Muncul Saat Video Diputar</p>
-                </div>
-            </div>
+            <div id="download-button-space"></div>
 
             <h2 class="video-section-title">Video Lainnya</h2>
             <div id="video-list-watch" class="video-list"></div>
@@ -230,80 +242,80 @@
     </div>
 
     <script>
-        // 1. ISI NAMA KOLEKSI ANDA DISINI
+        // 1. KELOLA INFORMASI BLOG ANDA DISINI
         const namaKoleksi = "Koleksi Sinema Saya";
         const deskripsiKoleksi = "Streaming lancar langsung dari Drive pribadi";
 
-        // 2. KELOLA DATA VIDEO DI SINI (Cukup Edit di Sini 1x Saja!)
-        // Anda bisa menambah, mengurangi, atau mengganti isinya hingga 10 video atau lebih.
+        // 2. KELOLA DATA VIDEO DI SINI
+        // PENTING: Ganti isi 'driveUrl' dengan link preview Google Drive Anda yang asli agar bisa diputar!
         const videoData = [
             {
                 id: "vid-01",
                 title: "Cara Optimasi Performa Komputer Windows 11 Terbaru",
                 thumbnail: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=600&auto=format&fit=crop",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_1/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-02",
                 title: "Setup PC Gaming Minimalis Menggunakan Liquid Cooling AIO",
                 thumbnail: "https://images.unsplash.com/photo-1547119957-637f8679db1e?w=600&auto=format&fit=crop",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_2/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-03",
                 title: "Review Kupas Tuntas Kecepatan NVMe SSD Gen 4",
                 thumbnail: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600&auto=format&fit=crop",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_3/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-04",
                 title: "Video Tutorial Pembelajaran Bagian 4",
                 thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+4",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_4/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-05",
                 title: "Video Dokumenter Keren File 5",
                 thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+5",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_5/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-06",
                 title: "Koleksi Video Menarik Bagian 6",
                 thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+6",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_6/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-07",
                 title: "Tutorial Pemrograman Web Pemula 7",
                 thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+7",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_7/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-08",
                 title: "Cinematic Video Pendek Eksperimen 8",
                 thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+8",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_8/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-09",
                 title: "Tips & Trik Mengelola Penyimpanan Google Drive 9",
                 thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+9",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_9/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             },
             {
                 id: "vid-10",
                 title: "Video Penutup List Koleksi Terakhir 10",
                 thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+10",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_10/preview"
+                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
             }
         ];
 
-        // Aplikasi Inisialisasi Teks Utama
+        // Inisialisasi Judul Utama Beranda
         document.getElementById('collection-name').innerText = namaKoleksi;
         document.getElementById('collection-desc').innerText = deskripsiKoleksi;
 
-        // Fungsi Render List Video ke Element Spesifik
+        // Fungsi Render List Video ke Element
         function renderVideos(containerElement) {
             containerElement.innerHTML = '';
             videoData.forEach(video => {
@@ -322,7 +334,7 @@
             });
         }
 
-        // Fungsi Inti Routing Halaman (Beranda vs Nonton)
+        // Fungsi Inti Routing Halaman (Beranda vs Nonton) + Refresh Link Tombol Iklan
         function handleRouting() {
             const hash = window.location.hash;
             const homeView = document.getElementById('home-view');
@@ -331,15 +343,11 @@
             const watchTitle = document.getElementById('watch-title');
 
             if (hash.startsWith('#watch')) {
-                // Sembunyikan beranda, tampilkan halaman nonton
                 homeView.style.display = 'none';
                 watchView.style.display = 'block';
 
-                // Ambil ID video dari parameter URL hash
                 const urlParams = new URLSearchParams(hash.split('?')[1]);
                 const videoId = urlParams.get('v');
-                
-                // Cari data video berdasarkan ID
                 const currentVideo = videoData.find(v => v.id === videoId);
 
                 if (currentVideo) {
@@ -348,28 +356,29 @@
                     document.title = currentVideo.title + " - " + namaKoleksi;
                 }
                 
-                // Muat daftar video lain di bawah halaman nonton
+                // === PROSES MEMASUKKAN ULANG TOMBOL SMARTLINK (REFRESH OTOMATIS) ===
+                const btnSpace = document.getElementById('download-button-space');
+                btnSpace.innerHTML = `
+                    <a href="https://www.effectivecpmnetwork.com/gwysdn6eqr?key=0341749c045688bb0aebdd64d2953b20" target="_blank" rel="noopener noreferrer" class="smartlink-btn">
+                        📥 Download &amp; Watch More Full Video Collections
+                    </a>
+                `;
+
+                // Render daftar rekomendasi video lainnya di bawah player
                 renderVideos(document.getElementById('video-list-watch'));
             } else {
-                // Tampilkan beranda, sembunyikan halaman nonton
                 homeView.style.display = 'block';
                 watchView.style.display = 'none';
-                
-                // Matikan player saat kembali ke beranda agar suara hilang
                 mainPlayer.src = ''; 
                 document.title = namaKoleksi;
-
-                // Muat daftar video di beranda
                 renderVideos(document.getElementById('video-list-home'));
             }
-            // Mengembalikan posisi scroll ke paling atas otomatis saat ganti video
             window.scrollTo(0, 0);
         }
 
-        // Jalankan routing saat hash url berubah atau halaman dimuat pertama kali
+        // Event Listener untuk memicu perpindahan halaman
         window.addEventListener('hashchange', handleRouting);
         window.addEventListener('DOMContentLoaded', handleRouting);
     </script>
 </body>
 </html>
-
