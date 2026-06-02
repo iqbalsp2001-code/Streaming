@@ -3,382 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koleksi Video</title>
+    <title>Video Gallery</title>
+    
+    <!-- Fluid Player CSS untuk Video & Iklan VAST -->
+    <link rel="stylesheet" href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" type="text/css" />
+    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+
     <style>
-        /* --- KELOLA GAYA UTAMA WEB (CSS) --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --bg-color: #0f0f0f;
+            --text-color: #f1f1f1;
+            --card-bg: #202020;
+            --primary: #ffa31a;
         }
 
         body {
-            background-color: #0f172a; /* Warna latar belakang gelap */
-            color: #f8fafc;
-            padding-bottom: 50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+        /* Header / Profil */
+        header {
+            display: flex;
+            align-items: center;
             padding: 20px;
+            background-color: #000;
+            border-bottom: 1px solid #333;
         }
 
-        /* --- HALAMAN BERANDA: PROFIL --- */
-        .profile-header {
-            text-align: center;
-            padding: 40px 0 20px 0;
-        }
-
-        .profile-header img {
-            width: 110px;
-            height: 110px;
+        .profile-pic {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #3b82f6;
-            margin-bottom: 15px;
+            border: 2px solid var(--primary);
+            margin-right: 15px;
         }
 
-        .profile-header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #ffffff;
+        header h1 {
+            font-size: 1.5rem;
+            margin: 0;
         }
 
-        .profile-header p {
-            font-size: 14px;
-            color: #94a3b8;
-            margin-top: 5px;
+        /* Container Utama */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
 
-        /* --- DAFTAR VIDEO (LIST MENURUN) --- */
-        .video-section-title {
-            font-size: 18px;
-            margin: 25px 0 15px 0;
-            color: #3b82f6;
-            border-left: 4px solid #3b82f6;
-            padding-left: 10px;
+        /* Video Player Section */
+        .video-section {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        .video-list {
-            display: flex;
-            flex-direction: column;
+        /* Galeri Thumbnail */
+        .gallery-title {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
         }
 
-        .video-item {
-            display: flex;
-            background-color: #1e293b;
+        .thumbnail-card {
+            background-color: var(--card-bg);
             border-radius: 8px;
             overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.2s, background-color 0.2s;
-            border: 1px solid #334155;
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
 
-        .video-item:hover {
-            transform: translateY(-2px);
-            background-color: #334155;
+        .thumbnail-card:hover {
+            transform: scale(1.02);
+            background-color: #333;
         }
 
-        .video-thumbnail-wrapper {
-            position: relative;
-            width: 180px;
-            min-width: 180px;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-        }
-
-        .video-thumbnail {
+        .thumbnail-card img {
             width: 100%;
-            height: 100%;
+            aspect-ratio: 16 / 9;
             object-fit: cover;
-        }
-
-        .video-info {
-            padding: 12px 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .video-title {
-            font-size: 16px;
-            font-weight: 600;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* --- HALAMAN NONTON (WATCH VIEW) --- */
-        #watch-view {
-            display: none;
-            padding-top: 20px;
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            color: #3b82f6;
-            text-decoration: none;
-            font-size: 14px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .back-btn:hover {
-            text-decoration: underline;
-        }
-
-        .player-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-        }
-
-        .player-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .watch-video-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin: 15px 0 5px 0; /* Jarak bawah dikecilkan agar dekat dengan tombol download */
-            line-height: 1.4;
-        }
-
-        /* --- STYLING UNTUK TOMBOL SMARTLINK DOWNLOAD (GABUNGAN KODE ANDA) --- */
-        .smartlink-btn {
             display: block;
-            width: 100%;
-            max-width: 100%; /* Disesuaikan otomatis dengan kontainer video */
-            margin: 15px auto 25px auto;
-            background: linear-gradient(90deg, #e50914 0%, #b20710 100%);
-            color: #ffffff !important;
-            text-align: center;
-            text-decoration: none;
-            padding: 16px 20px;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(229, 09, 20, 0.4);
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
-        
-        .smartlink-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(229, 09, 20, 0.7);
-            background: linear-gradient(90deg, #ff1723 0%, #d80b15 100%);
         }
 
-        /* Responsive untuk HP Layar Kecil */
-        @media (max-width: 480px) {
-            .video-item {
-                flex-direction: column;
-            }
-            .video-thumbnail-wrapper {
-                width: 100%;
-                min-width: 100%;
-            }
-            .video-info {
-                padding: 10px;
-            }
-            .video-title {
-                font-size: 14px;
-            }
-            .smartlink-btn {
-                padding: 14px 15px;
-                font-size: 14px;
-            }
+        .thumbnail-info {
+            padding: 10px;
+            font-size: 0.9rem;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
+    <!-- Header dengan Foto Profil -->
+    <header>
+        <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Wa-spam/refs/heads/main/pornhub-top.jpg" alt="Profile" class="profile-pic">
+        <h1>My Channel</h1>
+    </header>
+
     <div class="container">
-        
-        <div id="home-view">
-            <div class="profile-header">
-                <img src="https://via.placeholder.com/150" alt="Foto Profil">
-                <h1 id="collection-name">Nama Koleksi Video</h1>
-                <p id="collection-desc">Kumpulan video pilihan terbaik dari Google Drive</p>
-            </div>
-
-            <h2 class="video-section-title">Daftar Video Terbaru</h2>
-            <div id="video-list-home" class="video-list"></div>
+        <!-- Main Video Player dengan VAST -->
+        <div class="video-section">
+            <video id="my-video" controls style="width: 100%; height: 100%;">
+                <!-- Video Dummy sebagai placeholder (Wajib ada agar pemutar video berjalan dan menampilkan iklan) -->
+                <source src="https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" type="video/mp4" />
+            </video>
         </div>
 
-
-        <div id="watch-view">
-            <a href="#home" class="back-btn">← Kembali ke Beranda</a>
+        <!-- Galeri 10 Thumbnail -->
+        <h2 class="gallery-title">Daftar Video</h2>
+        <div class="thumbnail-grid">
             
-            <div class="player-container">
-                <iframe id="main-player" src="" allow="autoplay" allowfullscreen></iframe>
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg" alt="Thumb 1">
+                <div class="thumbnail-info">Video 1</div>
             </div>
 
-            <h1 id="watch-title" class="watch-video-title">Judul Video</h1>
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152349_link.me-picsay.jpeg" alt="Thumb 2">
+                <div class="thumbnail-info">Video 2</div>
+            </div>
 
-            <div id="download-button-space"></div>
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152242_link.me-picsay.jpeg" alt="Thumb 3">
+                <div class="thumbnail-info">Video 3</div>
+            </div>
 
-            <h2 class="video-section-title">Video Lainnya</h2>
-            <div id="video-list-watch" class="video-list"></div>
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/HeyLink_me%20_%20%F0%9F%91%87Asupanmu%F0%9F%91%87%20(1)-picsay.jpeg" alt="Thumb 4">
+                <div class="thumbnail-info">Video 4</div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152541_link.me-picsay.jpeg" alt="Thumb 5">
+                <div class="thumbnail-info">Video 5</div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152458_link.me-picsay.jpeg" alt="Thumb 6">
+                <div class="thumbnail-info">Video 6</div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152438_link.me-picsay.jpeg" alt="Thumb 7">
+                <div class="thumbnail-info">Video 7</div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152416_link.me-picsay.jpeg" alt="Thumb 8">
+                <div class="thumbnail-info">Video 8</div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_15236_link.me-picsay.jpeg" alt="Thumb 9">
+                <div class="thumbnail-info">Video 9</div>
+            </div>
+
+            <div class="thumbnail-card">
+                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152216_link.me-picsay.jpeg" alt="Thumb 10">
+                <div class="thumbnail-info">Video 10</div>
+            </div>
+
         </div>
-
     </div>
 
+    <!-- Script inisialisasi Video Player dan Konfigurasi Iklan VAST -->
     <script>
-        // 1. KELOLA INFORMASI BLOG ANDA DISINI
-        const namaKoleksi = "Koleksi Sinema Saya";
-        const deskripsiKoleksi = "Streaming lancar langsung dari Drive pribadi";
-
-        // 2. KELOLA DATA VIDEO DI SINI
-        // PENTING: Ganti isi 'driveUrl' dengan link preview Google Drive Anda yang asli agar bisa diputar!
-        const videoData = [
+        var myPlayer = fluidPlayer(
+            'my-video',
             {
-                id: "vid-01",
-                title: "Cara Optimasi Performa Komputer Windows 11 Terbaru",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg",
-                driveUrl: "https://docs.google.com/uc?export=download&id=1Yam6oRsFYW9xFX7szFJKSEaZx3Nz3hhL"
-            },
-            {
-                id: "vid-02",
-                title: "Setup PC Gaming Minimalis Menggunakan Liquid Cooling AIO",
-                thumbnail: "https://images.unsplash.com/photo-1547119957-637f8679db1e?w=600&auto=format&fit=crop",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            },
-            {
-                id: "vid-03",
-                title: "Review Kupas Tuntas Kecepatan NVMe SSD Gen 4",
-                thumbnail: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600&auto=format&fit=crop",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            },
-            {
-                id: "vid-04",
-                title: "Video Tutorial Pembelajaran Bagian 4",
-                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+4",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            },
-            {
-                id: "vid-05",
-                title: "Video Dokumenter Keren File 5",
-                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+5",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            },
-            {
-                id: "vid-06",
-                title: "Koleksi Video Menarik Bagian 6",
-                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+6",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            },
-            {
-                id: "vid-07",
-                title: "Tutorial Pemrograman Web Pemula 7",
-                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+7",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            },
-            {
-                id: "vid-08",
-                title: "Cinematic Video Pendek Eksperimen 8",
-                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+8",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            },
-            {
-                id: "vid-09",
-                title: "Tips & Trik Mengelola Penyimpanan Google Drive 9",
-                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+9",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            },
-            {
-                id: "vid-10",
-                title: "Video Penutup List Koleksi Terakhir 10",
-                thumbnail: "https://via.placeholder.com/640x360/1e293b/fff?text=Thumbnail+Video+10",
-                driveUrl: "https://drive.google.com/file/d/ID_FILE_DRIVE_ASLI_ANDA/preview"
-            }
-        ];
-
-        // Inisialisasi Judul Utama Beranda
-        document.getElementById('collection-name').innerText = namaKoleksi;
-        document.getElementById('collection-desc').innerText = deskripsiKoleksi;
-
-        // Fungsi Render List Video ke Element
-        function renderVideos(containerElement) {
-            containerElement.innerHTML = '';
-            videoData.forEach(video => {
-                const videoLink = document.createElement('a');
-                videoLink.href = `#watch?v=${video.id}`;
-                videoLink.className = 'video-item';
-                videoLink.innerHTML = `
-                    <div class="video-thumbnail-wrapper">
-                        <img class="video-thumbnail" src="${video.thumbnail}" alt="${video.title}" loading="lazy">
-                    </div>
-                    <div class="video-info">
-                        <h3 class="video-title">${video.title}</h3>
-                    </div>
-                `;
-                containerElement.appendChild(videoLink);
-            });
-        }
-
-        // Fungsi Inti Routing Halaman (Beranda vs Nonton) + Refresh Link Tombol Iklan
-        function handleRouting() {
-            const hash = window.location.hash;
-            const homeView = document.getElementById('home-view');
-            const watchView = document.getElementById('watch-view');
-            const mainPlayer = document.getElementById('main-player');
-            const watchTitle = document.getElementById('watch-title');
-
-            if (hash.startsWith('#watch')) {
-                homeView.style.display = 'none';
-                watchView.style.display = 'block';
-
-                const urlParams = new URLSearchParams(hash.split('?')[1]);
-                const videoId = urlParams.get('v');
-                const currentVideo = videoData.find(v => v.id === videoId);
-
-                if (currentVideo) {
-                    mainPlayer.src = currentVideo.driveUrl;
-                    watchTitle.innerText = currentVideo.title;
-                    document.title = currentVideo.title + " - " + namaKoleksi;
+                layoutControls: {
+                    fillToContainer: true,
+                    posterImage: 'https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg', // Memakai thumbnail pertama sebagai poster video
+                },
+                vastOptions: {
+                    adList: [
+                        {
+                            roll: 'preRoll', // Iklan dimainkan sebelum video utama dimulai
+                            vastTag: 'https://vast.yomeno.xyz/vast?spot_id=1492212' // Link Iklan VAST Anda
+                        }
+                    ]
                 }
-                
-                // === PROSES MEMASUKKAN ULANG TOMBOL SMARTLINK (REFRESH OTOMATIS) ===
-                const btnSpace = document.getElementById('download-button-space');
-                btnSpace.innerHTML = `
-                    <a href="https://www.effectivecpmnetwork.com/gwysdn6eqr?key=0341749c045688bb0aebdd64d2953b20" target="_blank" rel="noopener noreferrer" class="smartlink-btn">
-                        📥 Download &amp; Watch More Full Video Collections
-                    </a>
-                `;
-
-                // Render daftar rekomendasi video lainnya di bawah player
-                renderVideos(document.getElementById('video-list-watch'));
-            } else {
-                homeView.style.display = 'block';
-                watchView.style.display = 'none';
-                mainPlayer.src = ''; 
-                document.title = namaKoleksi;
-                renderVideos(document.getElementById('video-list-home'));
             }
-            window.scrollTo(0, 0);
-        }
-
-        // Event Listener untuk memicu perpindahan halaman
-        window.addEventListener('hashchange', handleRouting);
-        window.addEventListener('DOMContentLoaded', handleRouting);
+        );
     </script>
+
 </body>
 </html>
