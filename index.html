@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koleksi Video</title>
 
+    <!-- Fluid Player CSS untuk Video & Iklan VAST -->
     <link rel="stylesheet" href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" type="text/css" />
     <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
 
@@ -18,7 +19,7 @@
         }
 
         body {
-            background-color: #0f172a; /* Warna latar belakang gelap */
+            background-color: #0f172a;
             color: #f8fafc;
             padding-bottom: 50px;
         }
@@ -148,7 +149,6 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
-        /* Disesuaikan untuk Fluid Player agar mengisi kontainer */
         .fluid_video_wrapper {
             width: 100% !important;
             height: 100% !important;
@@ -187,7 +187,6 @@
             background: linear-gradient(90deg, #ff1723 0%, #d80b15 100%);
         }
 
-        /* Responsive untuk HP Layar Kecil */
         @media (max-width: 480px) {
             .video-item {
                 flex-direction: column;
@@ -228,7 +227,8 @@
             <a href="#home" class="back-btn">← Kembali ke Beranda</a>
             
             <div class="player-container" id="player-wrapper">
-                </div>
+                <!-- Video player di-generate via JavaScript -->
+            </div>
 
             <h1 id="watch-title" class="watch-video-title">Judul Video</h1>
 
@@ -241,18 +241,15 @@
     </div>
 
     <script>
-        // 1. KELOLA INFORMASI BLOG ANDA DISINI
         const namaKoleksi = "Koleksi Video Saya";
         const deskripsiKoleksi = "Streaming lancar koleksi pilihan (Support VAST Ads)";
 
-        // 2. KELOLA DATA VIDEO DI SINI
-        // Catatan: Ganti videoUrl dengan direct link mp4 Anda (Bukan link preview Google Drive agar Iklan VAST bisa muncul)
         const videoData = [
             {
                 id: "vid-01",
                 title: "Video Koleksi 1",
                 thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg",
-                videoUrl: "https://tgg.addyop.com/dl/6a1faf426053bab2b0a15cfc" // GANTI DENGAN DIRECT LINK VIDEO ANDA
+                videoUrl: "https://tgg.addyop.com/dl/6a1faf426053bab2b0a15cfc" // <--- Link Telegram Anda
             },
             {
                 id: "vid-02",
@@ -305,16 +302,14 @@
             {
                 id: "vid-10",
                 title: "Video Koleksi 10",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152216_link.me-picsay.jpeg",
+                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/heads/main/Screenshot_24-5-2026_152216_link.me-picsay.jpeg",
                 videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
             }
         ];
 
-        // Inisialisasi Judul Utama Beranda
         document.getElementById('collection-name').innerText = namaKoleksi;
         document.getElementById('collection-desc').innerText = deskripsiKoleksi;
 
-        // Fungsi Render List Video ke Element
         function renderVideos(containerElement) {
             containerElement.innerHTML = '';
             videoData.forEach(video => {
@@ -333,7 +328,6 @@
             });
         }
 
-        // Fungsi Inti Routing Halaman (Beranda vs Nonton)
         function handleRouting() {
             const hash = window.location.hash;
             const homeView = document.getElementById('home-view');
@@ -353,23 +347,22 @@
                     watchTitle.innerText = currentVideo.title;
                     document.title = currentVideo.title + " - " + namaKoleksi;
 
-                    // Buat ulang elemen video setiap ganti halaman agar script Iklan VAST ke-reset dengan baik
+                    // PERBAIKAN NOMOR 2: Memaksa browser membaca format sebagai video/mp4 secara manual
                     playerWrapper.innerHTML = `
                         <video id="main-player" controls style="width: 100%; height: 100%;">
                             <source src="${currentVideo.videoUrl}" type="video/mp4" />
                         </video>
                     `;
 
-                    // Inisialisasi Fluid Player & Pasang Tag Iklan VAST
                     fluidPlayer('main-player', {
                         layoutControls: {
                             fillToContainer: true,
-                            posterImage: currentVideo.thumbnail // Menjadikan thumbnail sebagai cover video
+                            posterImage: currentVideo.thumbnail
                         },
                         vastOptions: {
                             adList: [
                                 {
-                                    roll: 'preRoll', // Iklan VAST diputar sebelum video
+                                    roll: 'preRoll',
                                     vastTag: 'https://vast.yomeno.xyz/vast?spot_id=1492212'
                                 }
                             ]
@@ -377,7 +370,6 @@
                     });
                 }
                 
-                // === PROSES MEMASUKKAN ULANG TOMBOL SMARTLINK ===
                 const btnSpace = document.getElementById('download-button-space');
                 btnSpace.innerHTML = `
                     <a href="https://www.effectivecpmnetwork.com/gwysdn6eqr?key=0341749c045688bb0aebdd64d2953b20" target="_blank" rel="noopener noreferrer" class="smartlink-btn">
@@ -385,21 +377,20 @@
                     </a>
                 `;
 
-                // Render daftar rekomendasi video lainnya di bawah player
                 renderVideos(document.getElementById('video-list-watch'));
             } else {
                 homeView.style.display = 'block';
                 watchView.style.display = 'none';
-                playerWrapper.innerHTML = ''; // Hapus video saat kembali ke beranda agar suara berhenti
+                playerWrapper.innerHTML = '';
                 document.title = namaKoleksi;
                 renderVideos(document.getElementById('video-list-home'));
             }
             window.scrollTo(0, 0);
         }
 
-        // Event Listener untuk memicu perpindahan halaman
         window.addEventListener('hashchange', handleRouting);
         window.addEventListener('DOMContentLoaded', handleRouting);
     </script>
 </body>
 </html>
+
