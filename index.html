@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <script async="async" data-cfasync="false" src="https://pl29629185.effectivecpmnetwork.com/1b7d9917d906630684ed799f1db370e3/invoke.js"></script>
-<div id="container-1b7d9917d906630684ed799f1db370e3"></div>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koleksi Video</title>
@@ -223,6 +220,7 @@
             </div>
 
             <h2 class="video-section-title">Daftar Video Terbaru</h2>
+            <!-- Wadah list video -->
             <div id="video-list-home" class="video-list"></div>
         </div>
 
@@ -238,6 +236,7 @@
             <div id="download-button-space"></div>
 
             <h2 class="video-section-title">Video Lainnya</h2>
+            <!-- Wadah list video di halaman nonton -->
             <div id="video-list-watch" class="video-list"></div>
         </div>
 
@@ -248,74 +247,22 @@
         const deskripsiKoleksi = "Streaming lancar koleksi pilihan (Support VAST Ads)";
 
         const videoData = [
-            {
-                id: "vid-01",
-                title: "Video Koleksi 1",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg",
-                videoUrl: "https://tgg.addyop.com/dl/6a1faf426053bab2b0a15cfc" // <--- Link Telegram Anda
-            },
-            {
-                id: "vid-02",
-                title: "Video Koleksi 2",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152349_link.me-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            },
-            {
-                id: "vid-03",
-                title: "Video Koleksi 3",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152242_link.me-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            },
-            {
-                id: "vid-04",
-                title: "Video Koleksi 4",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/HeyLink_me%20_%20%F0%9F%91%87Asupanmu%F0%9F%91%87%20(1)-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            },
-            {
-                id: "vid-05",
-                title: "Video Koleksi 5",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152541_link.me-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            },
-            {
-                id: "vid-06",
-                title: "Video Koleksi 6",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152458_link.me-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            },
-            {
-                id: "vid-07",
-                title: "Video Koleksi 7",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152438_link.me-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            },
-            {
-                id: "vid-08",
-                title: "Video Koleksi 8",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152416_link.me-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            },
-            {
-                id: "vid-09",
-                title: "Video Koleksi 9",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_15236_link.me-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            },
-            {
-                id: "vid-10",
-                title: "Video Koleksi 10",
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/heads/main/Screenshot_24-5-2026_152216_link.me-picsay.jpeg",
-                videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv"
-            }
+            { id: "vid-01", title: "Video Koleksi 1", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg", videoUrl: "https://tgg.addyop.com/dl/6a1faf426053bab2b0a15cfc" },
+            { id: "vid-02", title: "Video Koleksi 2", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152349_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
+            { id: "vid-03", title: "Video Koleksi 3", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152242_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
+            { id: "vid-04", title: "Video Koleksi 4", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/HeyLink_me%20_%20%F0%9F%91%87Asupanmu%F0%9F%91%87%20(1)-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
+            { id: "vid-05", title: "Video Koleksi 5", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152541_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" }
         ];
 
         document.getElementById('collection-name').innerText = namaKoleksi;
         document.getElementById('collection-desc').innerText = deskripsiKoleksi;
 
+        // FUNGSI INTI: Menampilkan Video dan Menyisipkan Iklan
         function renderVideos(containerElement) {
             containerElement.innerHTML = '';
-            videoData.forEach(video => {
+            
+            videoData.forEach((video, index) => {
+                // 1. Buat elemen item video
                 const videoLink = document.createElement('a');
                 videoLink.href = `#watch?v=${video.id}`;
                 videoLink.className = 'video-item';
@@ -328,6 +275,43 @@
                     </div>
                 `;
                 containerElement.appendChild(videoLink);
+
+                // 2. SISIPKAN IKLAN BANNER (Posisikan di antara video)
+                // Kode di bawah ini akan memasang banner setiap kali satu video selesai dirender
+                // (Video 1 -> Iklan -> Video 2 -> Iklan -> dst)
+                
+                const adWrapper = document.createElement('div');
+                adWrapper.style.margin = "15px 0";
+                adWrapper.style.width = "100%";
+                
+                // Menggunakan iframe agar ID container iklan tidak mengalami duplikasi error
+                const adIframe = document.createElement('iframe');
+                adIframe.style.width = "100%";
+                // CATATAN PENTING: Sesuaikan tinggi (height) ini jika iklannya terpotong
+                adIframe.style.height = "180px"; 
+                adIframe.style.border = "none";
+                adIframe.style.overflow = "hidden";
+                adIframe.scrolling = "no";
+                
+                // Injeksi kode iklan aslimu ke dalam pelindung iframe
+                adIframe.srcdoc = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="utf-8">
+                        <style>
+                            body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }
+                        </style>
+                    </head>
+                    <body>
+                        <script async="async" data-cfasync="false" src="https://pl29629185.effectivecpmnetwork.com/1b7d9917d906630684ed799f1db370e3/invoke.js"><\/script>
+                        <div id="container-1b7d9917d906630684ed799f1db370e3"></div>
+                    </body>
+                    </html>
+                `;
+                
+                adWrapper.appendChild(adIframe);
+                containerElement.appendChild(adWrapper);
             });
         }
 
@@ -350,7 +334,6 @@
                     watchTitle.innerText = currentVideo.title;
                     document.title = currentVideo.title + " - " + namaKoleksi;
 
-                    // PERBAIKAN NOMOR 2: Memaksa browser membaca format sebagai video/mp4 secara manual
                     playerWrapper.innerHTML = `
                         <video id="main-player" controls style="width: 100%; height: 100%;">
                             <source src="${currentVideo.videoUrl}" type="video/mp4" />
@@ -395,6 +378,7 @@
         window.addEventListener('DOMContentLoaded', handleRouting);
     </script>
 
+    <!-- Skrip iklan utamamu yang diletakkan di bawah (tetap dipertahankan) -->
     <script src="https://pl29629187.effectivecpmnetwork.com/dd/93/7c/dd937c71f28e9f0e811304fc57d9fafe.js"></script>
 
 </body>
