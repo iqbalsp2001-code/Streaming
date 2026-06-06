@@ -1,283 +1,195 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koleksi Video</title>
+<script>
+    const namaKoleksi = "Koleksi Video Saya";
+    const deskripsiKoleksi = "Streaming lancar koleksi pilihan";
 
-    <link rel="stylesheet" href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" type="text/css" />
-    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-
-    <style>
-        /* --- KELOLA GAYA UTAMA WEB (CSS) --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { background-color: #0f172a; color: #f8fafc; padding-bottom: 50px; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-
-        /* --- HALAMAN BERANDA: PROFIL --- */
-        .profile-header { text-align: center; padding: 40px 0 20px 0; }
-        .profile-header img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #3b82f6; margin-bottom: 15px; }
-        .profile-header h1 { font-size: 24px; font-weight: 700; color: #ffffff; }
-        .profile-header p { font-size: 14px; color: #94a3b8; margin-top: 5px; }
-
-        /* --- DAFTAR VIDEO --- */
-        .video-section-title { font-size: 18px; margin: 25px 0 15px 0; color: #3b82f6; border-left: 4px solid #3b82f6; padding-left: 10px; }
-        .video-list { display: flex; flex-direction: column; gap: 15px; }
-        .video-item { display: flex; background-color: #1e293b; border-radius: 8px; overflow: hidden; text-decoration: none; color: inherit; transition: transform 0.2s, background-color 0.2s; border: 1px solid #334155; }
-        .video-item:hover { transform: translateY(-2px); background-color: #334155; }
-        .video-thumbnail-wrapper { position: relative; width: 180px; min-width: 180px; aspect-ratio: 16 / 9; background-color: #000; }
-        .video-thumbnail { width: 100%; height: 100%; object-fit: cover; }
-        .video-info { padding: 12px 15px; display: flex; flex-direction: column; justify-content: center; }
-        .video-title { font-size: 16px; font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
-        /* --- NAVIGASI HALAMAN (PAGINATION) --- */
-        .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 30px; margin-bottom: 20px; flex-wrap: wrap; }
-        .page-btn { padding: 10px 16px; background-color: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s; }
-        .page-btn.active { background-color: #3b82f6; border-color: #3b82f6; color: #fff; }
-        .page-btn:hover:not(:disabled) { background-color: #334155; }
-        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* --- HALAMAN NONTON --- */
-        #watch-view { display: none; padding-top: 20px; }
-        .back-btn { display: inline-flex; align-items: center; color: #3b82f6; text-decoration: none; font-size: 14px; margin-bottom: 20px; font-weight: 600; }
-        .back-btn:hover { text-decoration: underline; }
-        .player-container { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); }
-        .fluid_video_wrapper { width: 100% !important; height: 100% !important; }
-        .watch-video-title { font-size: 20px; font-weight: 700; margin: 15px 0 5px 0; line-height: 1.4; }
-
-        /* --- TOMBOL SMARTLINK --- */
-        .smartlink-btn { display: block; width: 100%; margin: 15px auto 25px auto; background: linear-gradient(90deg, #e50914 0%, #b20710 100%); color: #ffffff !important; text-align: center; text-decoration: none; padding: 16px 20px; font-size: 16px; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 15px rgba(229, 09, 20, 0.4); transition: all 0.3s ease; }
-        .smartlink-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(229, 09, 20, 0.7); background: linear-gradient(90deg, #ff1723 0%, #d80b15 100%); }
-
-        @media (max-width: 480px) {
-            .video-item { flex-direction: column; }
-            .video-thumbnail-wrapper { width: 100%; min-width: 100%; }
-            .video-info { padding: 10px; }
-            .video-title { font-size: 14px; }
-            .smartlink-btn { padding: 14px 15px; font-size: 14px; }
-            .page-btn { padding: 8px 12px; font-size: 12px; }
+    // 1. UPDATE DATA VIDEO (Masukkan URL Shrinkme dan URL DoodStream di sini)
+    const videoData = [
+        { 
+            id: "vid-01", 
+            title: "Video Koleksi 1 (DoodStream)", 
+            thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg", 
+            doodstreamUrl: "https://playmogo.com/e/q9g480u3uqcd", // Link dari atribut src DoodStream
+            shortlink: "https://shrinkme.io/contoh_link_1" // GANTI dengan hasil dari Shrinkme.io
+        },
+        { 
+            id: "vid-02", 
+            title: "Video Koleksi 2 (MP4 Biasa)", 
+            thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152349_link.me-picsay.jpeg", 
+            videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv", // Tetap bisa pakai direct link
+            shortlink: "https://shrinkme.io/contoh_link_2" 
+        },
+        // ... (lanjutkan sampai vid-10 dengan format yang sama)
+        { 
+            id: "vid-03", 
+            title: "Video Koleksi 3", 
+            thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152242_link.me-picsay.jpeg", 
+            videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv",
+            shortlink: "https://shrinkme.io/contoh_link_3" 
         }
-    </style>
-</head>
-<body>
+    ];
 
-    <div class="container">
+    document.getElementById('collection-name').innerText = namaKoleksi;
+    document.getElementById('collection-desc').innerText = deskripsiKoleksi;
+
+    let currentPage = 1;
+    const videosPerPage = 5;
+
+    function renderVideos(containerElement, scrollToTopId) {
+        containerElement.innerHTML = '';
         
-        <div id="home-view">
-            <div class="profile-header" id="top-section">
-                <img src="https://raw.githubusercontent.com/iqbalsp2001-code/Wa-spam/refs/heads/main/pornhub-top.jpg" alt="Foto Profil">
-                <h1 id="collection-name">Nama Koleksi Video</h1>
-                <p id="collection-desc">Kumpulan video pilihan terbaik</p>
-            </div>
+        const totalPages = Math.ceil(videoData.length / videosPerPage);
+        const startIndex = (currentPage - 1) * videosPerPage;
+        const endIndex = startIndex + videosPerPage;
+        const paginatedVideos = videoData.slice(startIndex, endIndex);
 
-            <h2 class="video-section-title">Daftar Video Terbaru</h2>
-            <div id="video-list-home" class="video-list"></div>
-        </div>
-
-        <div id="watch-view">
-            <a href="#home" class="back-btn">← Kembali ke Beranda</a>
-            
-            <div class="player-container" id="player-wrapper">
+        paginatedVideos.forEach((video) => {
+            const videoLink = document.createElement('a');
+            // PERUBAHAN OPSI 1: Saat diklik, arahkan ke Shortlink, BUKAN ke #watch
+            videoLink.href = video.shortlink; 
+            videoLink.className = 'video-item';
+            videoLink.innerHTML = `
+                <div class="video-thumbnail-wrapper">
+                    <img class="video-thumbnail" src="${video.thumbnail}" alt="${video.title}" loading="lazy">
                 </div>
+                <div class="video-info">
+                    <h3 class="video-title">${video.title}</h3>
+                </div>
+            `;
+            containerElement.appendChild(videoLink);
 
-            <h1 id="watch-title" class="watch-video-title">Judul Video</h1>
-            <div id="download-button-space"></div>
-
-            <h2 class="video-section-title" id="watch-more-title">Video Lainnya</h2>
-            <div id="video-list-watch" class="video-list"></div>
-        </div>
-
-    </div>
-
-    <script>
-        const namaKoleksi = "Koleksi Video Saya";
-        const deskripsiKoleksi = "Streaming lancar koleksi pilihan (Support VAST Ads)";
-
-        // Data 10 Video untuk simulasi 2 Halaman
-        const videoData = [
-            { id: "vid-01", title: "Video Koleksi 1", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg", videoUrl: "https://tgg.addyop.com/dl/6a1faf426053bab2b0a15cfc" },
-            { id: "vid-02", title: "Video Koleksi 2", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152349_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
-            { id: "vid-03", title: "Video Koleksi 3", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152242_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
-            { id: "vid-04", title: "Video Koleksi 4", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/HeyLink_me%20_%20%F0%9F%91%87Asupanmu%F0%9F%91%87%20(1)-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
-            { id: "vid-05", title: "Video Koleksi 5", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152541_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
-            { id: "vid-06", title: "Video Koleksi 6", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152458_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
-            { id: "vid-07", title: "Video Koleksi 7", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152438_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
-            { id: "vid-08", title: "Video Koleksi 8", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152416_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
-            { id: "vid-09", title: "Video Koleksi 9", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_15236_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" },
-            { id: "vid-10", title: "Video Koleksi 10", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152216_link.me-picsay.jpeg", videoUrl: "https://cdn.fluidplayer.com/videos/valerian-1080p.mkv" }
-        ];
-
-        document.getElementById('collection-name').innerText = namaKoleksi;
-        document.getElementById('collection-desc').innerText = deskripsiKoleksi;
-
-        // PENGATURAN HALAMAN (PAGINATION)
-        let currentPage = 1;
-        const videosPerPage = 5;
-
-        // FUNGSI RENDER VIDEO & IKLAN DENGAN PAGINATION
-        function renderVideos(containerElement, scrollToTopId) {
-            containerElement.innerHTML = '';
+            // Sisipkan Iklan Banner (Tetap seperti sebelumnya)
+            const adWrapper = document.createElement('div');
+            adWrapper.style.margin = "15px 0";
+            adWrapper.style.width = "100%";
             
-            // Hitung total halaman dan potong array data berdasarkan halaman saat ini
-            const totalPages = Math.ceil(videoData.length / videosPerPage);
-            const startIndex = (currentPage - 1) * videosPerPage;
-            const endIndex = startIndex + videosPerPage;
-            const paginatedVideos = videoData.slice(startIndex, endIndex);
+            const adIframe = document.createElement('iframe');
+            adIframe.style.width = "100%";
+            adIframe.style.height = "180px"; 
+            adIframe.style.border = "none";
+            adIframe.style.overflow = "hidden";
+            adIframe.scrolling = "no";
+            
+            adIframe.srcdoc = `
+                <!DOCTYPE html>
+                <html>
+                <head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;}</style></head>
+                <body>
+                    <script async="async" data-cfasync="false" src="https://pl29629185.effectivecpmnetwork.com/1b7d9917d906630684ed799f1db370e3/invoke.js"><\/script>
+                    <div id="container-1b7d9917d906630684ed799f1db370e3"></div>
+                </body>
+                </html>
+            `;
+            
+            adWrapper.appendChild(adIframe);
+            containerElement.appendChild(adWrapper);
+        });
 
-            // Loop untuk merender List Video
-            paginatedVideos.forEach((video) => {
-                const videoLink = document.createElement('a');
-                videoLink.href = `#watch?v=${video.id}`;
-                videoLink.className = 'video-item';
-                videoLink.innerHTML = `
-                    <div class="video-thumbnail-wrapper">
-                        <img class="video-thumbnail" src="${video.thumbnail}" alt="${video.title}" loading="lazy">
-                    </div>
-                    <div class="video-info">
-                        <h3 class="video-title">${video.title}</h3>
-                    </div>
-                `;
-                containerElement.appendChild(videoLink);
+        // Logika Tombol Pagination (Back & Next) - Tidak diubah
+        if (totalPages > 1) {
+            const paginationDiv = document.createElement('div');
+            paginationDiv.className = 'pagination';
 
-                // SISIPKAN IKLAN BANNER (Muncul di antara setiap video)
-                const adWrapper = document.createElement('div');
-                adWrapper.style.margin = "15px 0";
-                adWrapper.style.width = "100%";
-                
-                const adIframe = document.createElement('iframe');
-                adIframe.style.width = "100%";
-                adIframe.style.height = "180px"; 
-                adIframe.style.border = "none";
-                adIframe.style.overflow = "hidden";
-                adIframe.scrolling = "no";
-                
-                adIframe.srcdoc = `
-                    <!DOCTYPE html>
-                    <html>
-                    <head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;}</style></head>
-                    <body>
-                        <script async="async" data-cfasync="false" src="https://pl29629185.effectivecpmnetwork.com/1b7d9917d906630684ed799f1db370e3/invoke.js"><\/script>
-                        <div id="container-1b7d9917d906630684ed799f1db370e3"></div>
-                    </body>
-                    </html>
-                `;
-                
-                adWrapper.appendChild(adIframe);
-                containerElement.appendChild(adWrapper);
-            });
-
-            // MEMBUAT TOMBOL NAVIGASI HALAMAN (Hanya jika video lebih dari 5)
-            if (totalPages > 1) {
-                const paginationDiv = document.createElement('div');
-                paginationDiv.className = 'pagination';
-
-                // Tombol BACK
-                const prevBtn = document.createElement('button');
-                prevBtn.className = 'page-btn';
-                prevBtn.innerHTML = '&#8592; Back';
-                prevBtn.disabled = currentPage === 1;
-                prevBtn.onclick = () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        renderVideos(containerElement, scrollToTopId);
-                        document.getElementById(scrollToTopId).scrollIntoView();
-                    }
-                };
-                paginationDiv.appendChild(prevBtn);
-
-                // Tombol ANGKA
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageNumBtn = document.createElement('button');
-                    pageNumBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
-                    pageNumBtn.innerText = i;
-                    pageNumBtn.onclick = () => {
-                        currentPage = i;
-                        renderVideos(containerElement, scrollToTopId);
-                        document.getElementById(scrollToTopId).scrollIntoView();
-                    };
-                    paginationDiv.appendChild(pageNumBtn);
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn';
+            prevBtn.innerHTML = '&#8592; Back';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderVideos(containerElement, scrollToTopId);
+                    document.getElementById(scrollToTopId).scrollIntoView();
                 }
+            };
+            paginationDiv.appendChild(prevBtn);
 
-                // Tombol NEXT
-                const nextBtn = document.createElement('button');
-                nextBtn.className = 'page-btn';
-                nextBtn.innerHTML = 'Next &#8594;';
-                nextBtn.disabled = currentPage === totalPages;
-                nextBtn.onclick = () => {
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        renderVideos(containerElement, scrollToTopId);
-                        document.getElementById(scrollToTopId).scrollIntoView();
-                    }
+            for (let i = 1; i <= totalPages; i++) {
+                const pageNumBtn = document.createElement('button');
+                pageNumBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                pageNumBtn.innerText = i;
+                pageNumBtn.onclick = () => {
+                    currentPage = i;
+                    renderVideos(containerElement, scrollToTopId);
+                    document.getElementById(scrollToTopId).scrollIntoView();
                 };
-                paginationDiv.appendChild(nextBtn);
-
-                containerElement.appendChild(paginationDiv);
+                paginationDiv.appendChild(pageNumBtn);
             }
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn';
+            nextBtn.innerHTML = 'Next &#8594;';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderVideos(containerElement, scrollToTopId);
+                    document.getElementById(scrollToTopId).scrollIntoView();
+                }
+            };
+            paginationDiv.appendChild(nextBtn);
+            containerElement.appendChild(paginationDiv);
         }
+    }
 
-        // FUNGSI ROUTING / PINDAH HALAMAN TAMPILAN
-        function handleRouting() {
-            const hash = window.location.hash;
-            const homeView = document.getElementById('home-view');
-            const watchView = document.getElementById('watch-view');
-            const playerWrapper = document.getElementById('player-wrapper');
-            const watchTitle = document.getElementById('watch-title');
+    function handleRouting() {
+        const hash = window.location.hash;
+        const homeView = document.getElementById('home-view');
+        const watchView = document.getElementById('watch-view');
+        const playerWrapper = document.getElementById('player-wrapper');
+        const watchTitle = document.getElementById('watch-title');
 
-            if (hash.startsWith('#watch')) {
-                homeView.style.display = 'none';
-                watchView.style.display = 'block';
+        if (hash.startsWith('#watch')) {
+            homeView.style.display = 'none';
+            watchView.style.display = 'block';
 
-                const urlParams = new URLSearchParams(hash.split('?')[1]);
-                const videoId = urlParams.get('v');
-                const currentVideo = videoData.find(v => v.id === videoId);
+            const urlParams = new URLSearchParams(hash.split('?')[1]);
+            const videoId = urlParams.get('v');
+            const currentVideo = videoData.find(v => v.id === videoId);
 
-                if (currentVideo) {
-                    watchTitle.innerText = currentVideo.title;
-                    document.title = currentVideo.title + " - " + namaKoleksi;
+            if (currentVideo) {
+                watchTitle.innerText = currentVideo.title;
+                document.title = currentVideo.title + " - " + namaKoleksi;
 
+                // PERUBAHAN: Cek apakah pakai Doodstream atau MP4 biasa
+                if (currentVideo.doodstreamUrl) {
+                    // Render Iframe DoodStream
+                    playerWrapper.innerHTML = `
+                        <iframe width="100%" height="100%" src="${currentVideo.doodstreamUrl}" scrolling="no" frameborder="0" allowfullscreen="true" style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+                    `;
+                } else if (currentVideo.videoUrl) {
+                    // Render FluidPlayer jika ada link MP4 biasa
                     playerWrapper.innerHTML = `
                         <video id="main-player" controls style="width: 100%; height: 100%;">
                             <source src="${currentVideo.videoUrl}" type="video/mp4" />
                         </video>
                     `;
-
                     fluidPlayer('main-player', {
                         layoutControls: { fillToContainer: true, posterImage: currentVideo.thumbnail },
                         vastOptions: { adList: [{ roll: 'preRoll', vastTag: 'https://vast.yomeno.xyz/vast?spot_id=1492212' }] }
                     });
                 }
-                
-                document.getElementById('download-button-space').innerHTML = `
-                    <a href="https://www.effectivecpmnetwork.com/gwysdn6eqr?key=0341749c045688bb0aebdd64d2953b20" target="_blank" rel="noopener noreferrer" class="smartlink-btn">
-                        📥 Download &amp; Watch More Full Video Collections
-                    </a>
-                `;
-
-                // Render video lainnya (reset halamannya ke 1 saat masuk halaman nonton)
-                currentPage = 1;
-                renderVideos(document.getElementById('video-list-watch'), 'watch-more-title');
-                window.scrollTo(0, 0);
-            } else {
-                homeView.style.display = 'block';
-                watchView.style.display = 'none';
-                playerWrapper.innerHTML = '';
-                document.title = namaKoleksi;
-                
-                // Render list video beranda
-                currentPage = 1;
-                renderVideos(document.getElementById('video-list-home'), 'top-section');
-                window.scrollTo(0, 0);
             }
+            
+            document.getElementById('download-button-space').innerHTML = `
+                <a href="https://www.effectivecpmnetwork.com/gwysdn6eqr?key=0341749c045688bb0aebdd64d2953b20" target="_blank" rel="noopener noreferrer" class="smartlink-btn">
+                    📥 Download &amp; Watch More Full Video Collections
+                </a>
+            `;
+
+            currentPage = 1;
+            renderVideos(document.getElementById('video-list-watch'), 'watch-more-title');
+            window.scrollTo(0, 0);
+        } else {
+            homeView.style.display = 'block';
+            watchView.style.display = 'none';
+            playerWrapper.innerHTML = '';
+            document.title = namaKoleksi;
+            
+            currentPage = 1;
+            renderVideos(document.getElementById('video-list-home'), 'top-section');
+            window.scrollTo(0, 0);
         }
+    }
 
-        window.addEventListener('hashchange', handleRouting);
-        window.addEventListener('DOMContentLoaded', handleRouting);
-    </script>
-
-    <script src="https://pl29629187.effectivecpmnetwork.com/dd/93/7c/dd937c71f28e9f0e811304fc57d9fafe.js"></script>
-
-</body>
-</html>
-
+    window.addEventListener('hashchange', handleRouting);
+    window.addEventListener('DOMContentLoaded', handleRouting);
+</script>
