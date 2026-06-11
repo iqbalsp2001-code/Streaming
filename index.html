@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koleksi Video</title>
 
-    <!-- Iklan Banner (Wpadmngr) - Ini yang kemungkinan memunculkan iklan video overlay milikmu -->
-    <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442803"></script>
+    <!-- 1. Iklan Video Overlay (Wpadmngr) -->
+    <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="444566"></script>
 
     <style>
         /* --- KELOLA GAYA UTAMA WEB --- */
@@ -38,8 +38,8 @@
         .page-btn:hover:not(:disabled) { background-color: #334155; }
         .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* --- BATASAN IKLAN INPAGE AGAR TIDAK MENUTUPI PAGINATION --- */
-        .inpage-ad-container { width: 100%; max-height: 120px; overflow: hidden; display: flex; justify-content: center; margin-top: 15px; }
+        /* --- BATASAN IKLAN INPAGE --- */
+        .inpage-ad-container { width: 100%; display: flex; justify-content: center; margin-top: 15px; overflow: hidden; min-height: 50px; }
 
         /* --- HALAMAN NONTON & KOTAK PLAYER --- */
         #watch-view { display: none; padding-top: 20px; }
@@ -48,6 +48,10 @@
         
         .player-container { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); border: 2px solid #334155; }
         .watch-video-title { font-size: 20px; font-weight: 700; margin: 15px 0 5px 0; line-height: 1.4; }
+
+        /* --- EDUKASI IKLAN DOODSTREAM --- */
+        .doodstream-warning { background-color: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; padding: 12px 15px; margin: 15px 0; font-size: 13px; color: #cbd5e1; border-radius: 4px; line-height: 1.5; }
+        .doodstream-warning strong { color: #60a5fa; }
 
         /* --- 1. OVERLAY GLOBAL FULL SCREEN (5 DETIK) --- */
         .global-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(5px); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; padding: 20px; text-align: center; }
@@ -87,7 +91,7 @@
 <body>
 
     <!-- 1. LAPISAN OVERLAY GLOBAL (5 DETIK) -->
-    <!-- Iklan video overlay dari sistemmu akan muncul tanpa tertimpa di sini -->
+    <!-- Iklan video overlay dari Wpadmngr (444566) di head akan memunculkan iklannya di atas layar ini -->
     <div id="global-video-overlay" class="global-ad-overlay">
         <button id="close-global-btn" class="ad-close-btn global-close-pos" disabled>Tunggu (5s)</button>
         <div class="overlay-visual-cue">
@@ -107,8 +111,9 @@
             <h2 class="video-section-title">Daftar Video Terbaru</h2>
             <div id="video-list-home" class="video-list"></div>
             
+            <!-- 2. IKLAN INPAGE WPADMNGR -->
             <div class="inpage-ad-container">
-                <script src="https://pl29712216.effectivecpmnetwork.com/bd/7f/f2/bd7ff26851bb68fbcd441efae50c6a08.js"></script>
+                <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442789"></script>
             </div>
         </div>
 
@@ -121,11 +126,11 @@
                 <!-- Layer Doodstream -->
                 <div id="player-wrapper" style="width:100%; height:100%;"></div>
 
-                <!-- 2. OVERLAY KHUSUS BANNER DI PLAYER (4 DETIK) -->
+                <!-- 3. OVERLAY KHUSUS BANNER DI PLAYER (4 DETIK) -->
                 <div id="player-banner-layer" class="player-banner-overlay">
                     <button id="close-player-btn" class="ad-close-btn player-close-pos" disabled>Tunggu (4s)</button>
                     <div class="ad-box">
-                        <!-- IKLAN BANNER 300x250 DIKEMBALIKAN KE SINI -->
+                        <!-- IKLAN BANNER 300x250 -->
                         <script type="text/javascript">
                             atOptions = {
                                 'key' : '2c246c32fc6836e1b721bfe7b2c43ecf',
@@ -141,14 +146,20 @@
 
             </div>
 
+            <!-- TEKS EDUKASI DOODSTREAM -->
+            <div class="doodstream-warning">
+                💡 <strong>Tips Menonton:</strong> Jika saat kamu menekan tombol <i>Play</i> layar membuka tab/halaman baru, itu adalah <strong>iklan bawaan dari server DoodStream</strong>. Cukup tekan tombol kembali (back) atau tutup tab iklan tersebut, lalu tekan <i>Play</i> lagi (biasanya butuh 2-3 kali) sampai video benar-benar berputar.
+            </div>
+
             <h1 id="watch-title" class="watch-video-title">Judul Video</h1>
             <div id="download-button-space"></div>
 
             <h2 class="video-section-title" id="watch-more-title">Video Lainnya</h2>
             <div id="video-list-watch" class="video-list"></div>
             
+            <!-- 2. IKLAN INPAGE WPADMNGR -->
             <div class="inpage-ad-container">
-                <script src="https://pl29712216.effectivecpmnetwork.com/bd/7f/f2/bd7ff26851bb68fbcd441efae50c6a08.js"></script>
+                <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442789"></script>
             </div>
         </div>
 
@@ -254,7 +265,7 @@
                 `;
                 containerElement.appendChild(videoLink);
 
-                // NATIVE BANNER ADSTERRA
+                // NATIVE BANNER ADSTERRA DIANTARA VIDEO
                 const adWrapper = document.createElement('div');
                 adWrapper.style.margin = "15px 0"; adWrapper.style.width = "100%";
                 const adIframe = document.createElement('iframe');
