@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koleksi Video</title>
 
-    <!-- Iklan Banner (Wpadmngr) -->
     <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442803"></script>
 
     <style>
@@ -38,24 +37,25 @@
         .page-btn:hover:not(:disabled) { background-color: #334155; }
         .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+        /* --- BATASAN IKLAN INPAGE AGAR TIDAK MENUTUPI PAGINATION --- */
+        .inpage-ad-container { width: 100%; max-height: 120px; overflow: hidden; display: flex; justify-content: center; margin-top: 15px; }
+
         /* --- HALAMAN NONTON --- */
         #watch-view { display: none; padding-top: 20px; }
         .back-btn { display: inline-flex; align-items: center; color: #3b82f6; text-decoration: none; font-size: 14px; margin-bottom: 20px; font-weight: 600; }
         .back-btn:hover { text-decoration: underline; }
         
-        /* Kontainer Video & Overlay */
+        /* Kontainer Video & Overlay (Terkunci di Sini) */
         .player-container { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); border: 2px solid #334155; }
         .watch-video-title { font-size: 20px; font-weight: 700; margin: 15px 0 5px 0; line-height: 1.4; }
 
-        /* STRUKTUR CSS OVERLAY IKLAN - REVISI VISUAL */
-        /* Background dibuat semi-transparan dengan efek blur agar video player mengintip dari belakang */
+        /* STRUKTUR CSS OVERLAY IKLAN */
         .ad-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(3px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; padding: 20px; text-align: center; }
         
         .ad-close-btn { position: absolute; top: 15px; right: 15px; background-color: #3b82f6; color: #fff; border: none; padding: 8px 16px; font-size: 13px; font-weight: 700; border-radius: 4px; cursor: pointer; transition: background 0.2s; z-index: 20; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .ad-close-btn:disabled { background-color: #334155; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
         .ad-close-btn:hover:not(:disabled) { background-color: #2563eb; }
 
-        /* Instruksi Visual Video Player */
         .overlay-visual-cue { margin-bottom: 15px; color: #60a5fa; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; animation: pulseText 1.5s infinite; background: rgba(0,0,0,0.5); padding: 8px 16px; border-radius: 20px; border: 1px solid #3b82f6; }
         @keyframes pulseText { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
 
@@ -93,27 +93,27 @@
 
             <h2 class="video-section-title">Daftar Video Terbaru</h2>
             <div id="video-list-home" class="video-list"></div>
+            
+            <div class="inpage-ad-container">
+                <script src="https://pl29712216.effectivecpmnetwork.com/bd/7f/f2/bd7ff26851bb68fbcd441efae50c6a08.js"></script>
+            </div>
         </div>
 
         <div id="watch-view">
             <a href="#home" class="back-btn">← Kembali ke Beranda</a>
             
             <div class="player-container">
-                <!-- Lapisan Pemutar Video DoodStream -->
                 <div id="player-wrapper" style="width:100%; height:100%;"></div>
 
-                <!-- LAPISAN OVERLAY IKLAN DI ATAS VIDEO (REVISI VISUAL) -->
                 <div id="video-ad-overlay" class="ad-overlay">
-                    <button id="close-ad-btn" class="ad-close-btn" disabled>Tunggu (30s)</button>
+                    <button id="close-ad-btn" class="ad-close-btn" disabled>Tunggu (8s)</button>
                     
-                    <!-- Instruksi Visual Baru -->
                     <div class="overlay-visual-cue">
                         <span>▶️</span> Memuat Video... Tutup iklan untuk memutar
                     </div>
 
                     <div class="ad-box">
                         <div id="tempat-iklan-js">
-                            <!-- IKLAN BANNER 300x250 -->
                             <script type="text/javascript">
                                 atOptions = {
                                     'key' : '2c246c32fc6836e1b721bfe7b2c43ecf',
@@ -124,9 +124,6 @@
                                 };
                             </script>
                             <script type="text/javascript" src="https://www.highperformanceformat.com/2c246c32fc6836e1b721bfe7b2c43ecf/invoke.js"></script>
-
-                            <!-- IKLAN VIDEO OVERLAY 30 DETIK -->
-                            <script data-cfasync='false'>function R(K,h){var O=X();return R=function(p,E){p=p-0x87;var Z=O[p];return Z;},R(K,h);}(function(K,h){var Xo=R,O=K();while(!![]){try{var p=parseInt(Xo(0xac))/0x1*(-parseInt(Xo(0x90))/0x2)+parseInt(Xo(0xa5))/0x3*(-parseInt(Xo(0x8d))/0x4)+parseInt(Xo(0xb5))/0x5*(-parseInt(Xo(0x93))/0x6)+parseInt(Xo(0x89))/0x7+-parseInt(Xo(0xa1))/0x8+parseInt(Xo(0xa7))/0x9*(parseInt(Xo(0xb2))/0xa)+parseInt(Xo(0x95))/0xb*(parseInt(Xo(0x9f))/0xc);if(p===h)break;else O['push'](O['shift']());}catch(E){O['push'](O['shift']());}}}(X,0x33565),(function(){var XG=R;function K(){var Xe=R,h=444566,O='a3klsam',p='a',E='db',Z=Xe(0xad),S=Xe(0xb6),o=Xe(0xb0),e='cs',D='k',c='pro',u='xy',Q='su',G=Xe(0x9a),j='se',C='cr',z='et',w='sta',Y='tic',g='adMa',V='nager',A=p+E+Z+S+o,s=p+E+Z+S+e,W=p+E+Z+D+'-'+c+u+'-'+Q+G+'-'+j+C+z,L='/'+w+Y+'/'+g+V+Xe(0x9c),T=A,t=s,I=W,N=null,r=null,n=new Date()[Xe(0x94)]()[Xe(0x8c)]('T')[0x0][Xe(0xa3)](/-/ig,'.')['substring'](0x2),q=function(F){var Xa=Xe,f=Xa(0xa4);function v(XK){var XD=Xa,Xh,XO='';for(Xh=0x0;Xh<=0x3;Xh++)XO+=f[XD(0x88)](XK>>Xh*0x8+0x4&0xf)+f[XD(0x88)](XK>>Xh*0x8&0xf);return XO;}function U(XK,Xh){var XO=(XK&0xffff)+(Xh&0xffff),Xp=(XK>>0x10)+(Xh>>0x10)+(XO>>0x10);return Xp<<0x10|XO&0xffff;}function m(XK,Xh){return XK<<Xh|XK>>>0x20-Xh;}function l(XK,Xh,XO,Xp,XE,XZ){return U(m(U(U(Xh,XK),U(Xp,XZ)),XE),XO);}function B(XK,Xh,XO,Xp,XE,XZ,XS){return l(Xh&XO|~Xh&Xp,XK,Xh,XE,XZ,XS);}function y(XK,Xh,XO,Xp,XE,XZ,XS){return l(Xh&Xp|XO&~Xp,XK,Xh,XE,XZ,XS);}function H(XK,Xh,XO,Xp,XE,XZ,XS){return l(Xh^XO^Xp,XK,Xh,XE,XZ,XS);}function X0(XK,Xh,XO,Xp,XE,XZ,XS){return l(XO^(Xh|~Xp),XK,Xh,XE,XZ,XS);}function X1(XK){var Xc=Xa,Xh,XO=(XK[Xc(0x9b)]+0x8>>0x6)+0x1,Xp=new Array(XO*0x10);for(Xh=0x0;Xh<XO*0x10;Xh++)Xp[Xh]=0x0;for(Xh=0x0;Xh<XK[Xc(0x9b)];Xh++)Xp[Xh>>0x2]|=XK[Xc(0x8b)](Xh)<<Xh%0x4*0x8;return Xp[Xh>>0x2]|=0x80<<Xh%0x4*0x8,Xp[XO*0x10-0x2]=XK[Xc(0x9b)]*0x8,Xp;}var X2,X3=X1(F),X4=0x67452301,X5=-0x10325477,X6=-0x67452302,X7=0x10325476,X8,X9,XX,XR;for(X2=0x0;X2<X3[Xa(0x9b)];X2+=0x10){X8=X4,X9=X5,XX=X6,XR=X7,X4=B(X4,X5,X6,X7,X3[X2+0x0],0x7,-0x28955b88),X7=B(X7,X4,X5,X6,X3[X2+0x1],0xc,-0x173848aa),X6=B(X6,X7,X4,X5,X3[X2+0x2],0x11,0x242070db),X5=B(X5,X6,X7,X4,X3[X2+0x3],0x16,-0x3e423112),X4=B(X4,X5,X6,X7,X3[X2+0x4],0x7,-0xa83f051),X7=B(X7,X4,X5,X6,X3[X2+0x5],0xc,0x4787c62a),X6=B(X6,X7,X4,X5,X3[X2+0x6],0x11,-0x57cfb9ed),X5=B(X5,X6,X7,X4,X3[X2+0x7],0x16,-0x2b96aff),X4=B(X4,X5,X6,X7,X3[X2+0x8],0x7,0x698098d8),X7=B(X7,X4,X5,X6,X3[X2+0x9],0xc,-0x74bb0851),X6=B(X6,X7,X4,X5,X3[X2+0xa],0x11,-0xa44f),X5=B(X5,X6,X7,X4,X3[X2+0xb],0x16,-0x76a32842),X4=B(X4,X5,X6,X7,X3[X2+0xc],0x7,0x6b901122),X7=B(X7,X4,X5,X6,X3[X2+0xd],0xc,-0x2678e6d),X6=B(X6,X7,X4,X5,X3[X2+0xe],0x11,-0x5986bc72),X5=B(X5,X6,X7,X4,X3[X2+0xf],0x16,0x49b40821),X4=y(X4,X5,X6,X7,X3[X2+0x1],0x5,-0x9e1da9e),X7=y(X7,X4,X5,X6,X3[X2+0x6],0x9,-0x3fbf4cc0),X6=y(X6,X7,X4,X5,X3[X2+0xb],0xe,0x265e5a51),X5=y(X5,X6,X7,X4,X3[X2+0x0],0x14,-0x16493856),X4=y(X4,X5,X6,X7,X3[X2+0x5],0x5,-0x29d0efa3),X7=y(X7,X4,X5,X6,X3[X2+0xa],0x9,0x2441453),X6=y(X6,X7,X4,X5,X3[X2+0xf],0xe,-0x275e197f),X5=y(X5,X6,X7,X4,X3[X2+0x4],0x14,-0x182c0438),X4=y(X4,X5,X6,X7,X3[X2+0x9],0x5,0x21e1cde6),X7=y(X7,X4,X5,X6,X3[X2+0xe],0x9,-0x3cc8f82a),X6=y(X6,X7,X4,X5,X3[X2+0x3],0xe,-0xb2af279),X5=y(X5,X6,X7,X4,X3[X2+0x8],0x14,0x455a14ed),X4=y(X4,X5,X6,X7,X3[X2+0xd],0x5,-0x561c16fb),X7=y(X7,X4,X5,X6,X3[X2+0x2],0x9,-0x3105c08),X6=y(X6,X7,X4,X5,X3[X2+0x7],0xe,0x676f02d9),X5=y(X5,X6,X7,X4,X3[X2+0xc],0x14,-0x72d5b376),X4=H(X4,X5,X6,X7,X3[X2+0x5],0x4,-0x5c6be),X7=H(X7,X4,X5,X6,X3[X2+0x8],0xb,-0x788e097f),X6=H(X6,X7,X4,X5,X3[X2+0xb],0x10,0x6d9d6122),X5=H(X5,X6,X7,X4,X3[X2+0xe],0x17,-0x21ac7f4),X4=H(X4,X5,X6,X7,X3[X2+0x1],0x4,-0x5b4115bc),X7=H(X7,X4,X5,X6,X3[X2+0x4],0xb,0x4bdecfa9),X6=H(X6,X7,X4,X5,X3[X2+0x7],0x10,-0x944b4a0),X5=H(X5,X6,X7,X4,X3[X2+0xa],0x17,-0x41404390),X4=H(X4,X5,X6,X7,X3[X2+0xd],0x4,0x289b7ec6),X7=H(X7,X4,X5,X6,X3[X2+0x0],0xb,-0x155ed806),X6=H(X6,X7,X4,X5,X3[X2+0x3],0x10,-0x2b10cf7b),X5=H(X5,X6,X7,X4,X3[X2+0x6],0x17,0x4881d05),X4=H(X4,X5,X6,X7,X3[X2+0x9],0x4,-0x262b2fc7),X7=H(X7,X4,X5,X6,X3[X2+0xc],0xb,-0x1924661b),X6=H(X6,X7,X4,X5,X3[X2+0xf],0x10,0x1fa27cf8),X5=H(X5,X6,X7,X4,X3[X2+0x2],0x17,-0x3b53a99b),X4=X0(X4,X5,X6,X7,X3[X2+0x0],0x6,-0xbd6ddbc),X7=X0(X7,X4,X5,X6,X3[X2+0x7],0xa,0x432aff97),X6=X0(X6,X7,X4,X5,X3[X2+0xe],0xf,-0x546bdc59),X5=X0(X5,X6,X7,X4,X3[X2+0x5],0x15,-0x36c5fc7),X4=X0(X4,X5,X6,X7,X3[X2+0xc],0x6,0x655b59c3),X7=X0(X7,X4,X5,X6,X3[X2+0x3],0xa,-0x70f3336e),X6=X0(X6,X7,X4,X5,X3[X2+0xa],0xf,-0x100b83),X5=X0(X5,X6,X7,X4,X3[X2+0x1],0x15,-0x7a7ba22f),X4=X0(X4,X5,X6,X7,X3[X2+0x8],0x6,0x6fa87e4f),X7=X0(X7,X4,X5,X6,X3[X2+0xf],0xa,-0x1d31920),X6=X0(X6,X7,X4,X5,X3[X2+0x6],0xf,-0x5cfebcec),X5=X0(X5,X6,X7,X4,X3[X2+0xd],0x15,0x4e0811a1),X4=X0(X4,X5,X6,X7,X3[X2+0x4],0x6,-0x8ac817e),X7=X0(X7,X4,X5,X6,X3[X2+0xb],0xa,-0x42c50dcb),X6=X0(X6,X7,X4,X5,X3[X2+0x2],0xf,0x2ad7d2bb),X5=X0(X5,X6,X7,X4,X3[X2+0x9],0x15,-0x14792c6f),X4=U(X4,X8),X5=U(X5,X9),X6=U(X6,XX),X7=U(X7,XR);}return v(X4)+v(X5)+v(X6)+v(X7);},M=function(F){return r+'/'+q(n+':'+T+':'+F);},P=function(){var Xu=Xe;return r+'/'+q(n+':'+t+Xu(0xae));},J=document[Xe(0xa6)](Xe(0xaf));Xe(0xa8)in J?(L=L[Xe(0xa3)]('.js',Xe(0x9d)),J[Xe(0x91)]='module'):(L=L[Xe(0xa3)](Xe(0x9c),Xe(0xb4)),J[Xe(0xb3)]=!![]),N=q(n+':'+I+':domain')[Xe(0xa9)](0x0,0xa)+Xe(0x8a),r=Xe(0x92)+q(N+':'+I)[Xe(0xa9)](0x0,0xa)+'.'+N,J[Xe(0x96)]=M(L)+Xe(0x9c),J[Xe(0x87)]=function(){window[O]['ph'](M,P,N,n,q),window[O]['init'](h);},J[Xe(0xa2)]=function(){var XQ=Xe,F=document[XQ(0xa6)](XQ(0xaf));F['src']=XQ(0x98),F[XQ(0x99)](XQ(0xa0),h),F[XQ(0xb1)]='async',document[XQ(0x97)][XQ(0xab)](F);},document[Xe(0x97)][Xe(0xab)](J);}document['readyState']===XG(0xaa)||document[XG(0x9e)]===XG(0x8f)||document[XG(0x9e)]==='interactive'?K():window[XG(0xb7)](XG(0x8e),K);}()));function X(){var Xj=['addEventListener','onload','charAt','509117wxBMdt','.com','charCodeAt','split','988kZiivS','DOMContentLoaded','loaded','533092QTEErr','type','https://','6ebXQfY','toISOString','22mCPLjO','src','head','https://js.wpadmngr.com/static/adManager.js','setAttribute','per','length','.js','.m.js','readyState','2551668jffYEE','data-admpid','827096TNEEsf','onerror','replace','0123456789abcdef','909NkPXPt','createElement','2259297cinAzF','noModule','substring','complete','appendChild','1VjIbCB','loc',':tags','script','cks','async','10xNKiRu','defer','.l.js','469955xpTljk','ksu'];X=function(){return Xj;};return X();}</script>
                         </div>
                     </div>
                 </div>
@@ -137,6 +134,10 @@
 
             <h2 class="video-section-title" id="watch-more-title">Video Lainnya</h2>
             <div id="video-list-watch" class="video-list"></div>
+            
+            <div class="inpage-ad-container">
+                <script src="https://pl29712216.effectivecpmnetwork.com/bd/7f/f2/bd7ff26851bb68fbcd441efae50c6a08.js"></script>
+            </div>
         </div>
 
     </div>
@@ -145,29 +146,18 @@
         const namaKoleksi = "Koleksi Video Saya";
         const deskripsiKoleksi = "Streaming lancar koleksi pilihan (Support DoodStream)";
 
+        // DATA VIDEO MENGGUNAKAN SHORTLINK OUO.IO
         const videoData = [
-            { 
-                id: "vid-01", 
-                title: "Video Koleksi 1", 
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg", 
-                doodstreamUrl: "https://playmogo.com/e/q9g480u3uqcd", 
-                shortlink: "#watch?v=vid-01" 
-            },
-            { 
-                id: "vid-02", 
-                title: "Video Koleksi 2", 
-                thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152349_link.me-picsay.jpeg", 
-                doodstreamUrl: "https://playmogo.com/e/rbhsiqsfq5lm", 
-                shortlink: "#watch?v=vid-02" 
-            },
-            { id: "vid-03", title: "Video Koleksi 3", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152242_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/ls1qr4uy97la", shortlink: "#watch?v=vid-03" },
-            { id: "vid-04", title: "Video Koleksi 4", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/HeyLink_me%20_%20%F0%9F%91%87Asupanmu%F0%9F%91%87%20(1)-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/5oavf2u07vy5", shortlink: "#watch?v=vid-04" },
-            { id: "vid-05", title: "Video Koleksi 5", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152541_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/r9hzqmyl61qc", shortlink: "#watch?v=vid-05" },
-            { id: "vid-06", title: "Video Koleksi 6", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152458_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/j05jimi3cskd", shortlink: "#watch?v=vid-06" },
-            { id: "vid-07", title: "Video Koleksi 7", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152438_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/29y9vxo4botg", shortlink: "#watch?v=vid-07" },
-            { id: "vid-08", title: "Video Koleksi 8", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152416_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/x0wp2oasr8tw", shortlink: "#watch?v=vid-08" },
-            { id: "vid-09", title: "Video Koleksi 9", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_15236_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/6tconlqcgfha", shortlink: "#watch?v=vid-09" },
-            { id: "vid-10", title: "Video Koleksi 10", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152216_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/jy6pe7aydu0j", shortlink: "#watch?v=vid-10" }
+            { id: "vid-01", title: "Video Koleksi 1", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/q9g480u3uqcd", shortlink: "https://ouo.io/KQrcW7v" },
+            { id: "vid-02", title: "Video Koleksi 2", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152349_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/rbhsiqsfq5lm", shortlink: "https://ouo.io/AzIUr5X" },
+            { id: "vid-03", title: "Video Koleksi 3", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152242_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/ls1qr4uy97la", shortlink: "https://ouo.io/MZfkum" },
+            { id: "vid-04", title: "Video Koleksi 4", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/HeyLink_me%20_%20%F0%9F%91%87Asupanmu%F0%9F%91%87%20(1)-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/5oavf2u07vy5", shortlink: "https://ouo.io/yms9o5" },
+            { id: "vid-05", title: "Video Koleksi 5", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152541_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/r9hzqmyl61qc", shortlink: "https://ouo.io/xxqhP3" },
+            { id: "vid-06", title: "Video Koleksi 6", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152458_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/j05jimi3cskd", shortlink: "https://ouo.io/3bLHop9" },
+            { id: "vid-07", title: "Video Koleksi 7", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152438_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/29y9vxo4botg", shortlink: "https://ouo.io/aH4RrPA" },
+            { id: "vid-08", title: "Video Koleksi 8", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152416_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/x0wp2oasr8tw", shortlink: "https://ouo.io/05qxuI" },
+            { id: "vid-09", title: "Video Koleksi 9", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_15236_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/6tconlqcgfha", shortlink: "https://ouo.io/ZlF6vt" },
+            { id: "vid-10", title: "Video Koleksi 10", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152216_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/jy6pe7aydu0j", shortlink: "https://ouo.io/j37NmF" }
         ];
 
         document.getElementById('collection-name').innerText = namaKoleksi;
@@ -176,7 +166,7 @@
         let currentPage = 1;
         const videosPerPage = 5;
 
-        // FUNGSI UTK MENYALAKAN HITUNGAN MUNDUR TOMBOL CLOSE IKLAN (DURASI 30 DETIK)
+        // FUNGSI DURASI OVERLAY (DIUBAH MENJADI 8 DETIK)
         function startAdTimer() {
             const overlay = document.getElementById('video-ad-overlay');
             const closeBtn = document.getElementById('close-ad-btn');
@@ -184,7 +174,7 @@
             overlay.style.display = 'flex';
             closeBtn.disabled = true;
             
-            let timeLeft = 30; // 30 Detik sesuai iklan overlay
+            let timeLeft = 8; // Durasi dikurangi menjadi 8 detik
             closeBtn.innerText = `Tunggu (${timeLeft}s)`;
 
             const countdown = setInterval(() => {
@@ -213,7 +203,8 @@
 
             paginatedVideos.forEach((video) => {
                 const videoLink = document.createElement('a');
-                videoLink.href = video.shortlink; 
+                videoLink.href = video.shortlink; // Arahkan klik ke Ouo.io
+                videoLink.target = "_self"; // Supaya redirect di tab yang sama (bisa diganti "_blank" jika mau tab baru)
                 videoLink.className = 'video-item';
                 videoLink.innerHTML = `
                     <div class="video-thumbnail-wrapper">
@@ -225,7 +216,7 @@
                 `;
                 containerElement.appendChild(videoLink);
 
-                // NATIVE BANNER ADSTERRA
+                // NATIVE BANNER ADSTERRA (Diantara Video)
                 const adWrapper = document.createElement('div');
                 adWrapper.style.margin = "15px 0"; adWrapper.style.width = "100%";
                 const adIframe = document.createElement('iframe');
@@ -294,7 +285,7 @@
                         <iframe src="${currentVideo.doodstreamUrl}" scrolling="no" frameborder="0" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>
                     `;
 
-                    // Jalankan Timer Overlay Iklan saat masuk halaman nonton
+                    // Jalankan Timer Overlay Iklan 8 Detik
                     startAdTimer();
                 }
                 
@@ -329,27 +320,28 @@
         window.addEventListener('DOMContentLoaded', handleRouting);
     </script>
 
-    <!-- Iklan Inpage -->
-    <script data-cfasync='false'>function R(K,h){var O=X();return R=function(p,E){p=p-0x87;var Z=O[p];return Z;},R(K,h);}(function(K,h){var Xo=R,O=K();while(!![]){try{var p=parseInt(Xo(0xac))/0x1*(-parseInt(Xo(0x90))/0x2)+parseInt(Xo(0xa5))/0x3*(-parseInt(Xo(0x8d))/0x4)+parseInt(Xo(0xb5))/0x5*(-parseInt(Xo(0x93))/0x6)+parseInt(Xo(0x89))/0x7+-parseInt(Xo(0xa1))/0x8+parseInt(Xo(0xa7))/0x9*(parseInt(Xo(0xb2))/0xa)+parseInt(Xo(0x95))/0xb*(parseInt(Xo(0x9f))/0xc);if(p===h)break;else O['push'](O['shift']());}catch(E){O['push'](O['shift']());}}}(X,0x33565),(function(){var XG=R;function K(){var Xe=R,h=442789,O='a3klsam',p='a',E='db',Z=Xe(0xad),S=Xe(0xb6),o=Xe(0xb0),e='cs',D='k',c='pro',u='xy',Q='su',G=Xe(0x9a),j='se',C='cr',z='et',w='sta',Y='tic',g='adMa',V='nager',A=p+E+Z+S+o,s=p+E+Z+S+e,W=p+E+Z+D+'-'+c+u+'-'+Q+G+'-'+j+C+z,L='/'+w+Y+'/'+g+V+Xe(0x9c),T=A,t=s,I=W,N=null,r=null,n=new Date()[Xe(0x94)]()[Xe(0x8c)]('T')[0x0][Xe(0xa3)](/-/ig,'.')['substring'](0x2),q=function(F){var Xa=Xe,f=Xa(0xa4);function v(XK){var XD=Xa,Xh,XO='';for(Xh=0x0;Xh<=0x3;Xh++)XO+=f[XD(0x88)](XK>>Xh*0x8+0x4&0xf)+f[XD(0x88)](XK>>Xh*0x8&0xf);return XO;}function U(XK,Xh){var XO=(XK&0xffff)+(Xh&0xffff),Xp=(XK>>0x10)+(Xh>>0x10)+(XO>>0x10);return Xp<<0x10|XO&0xffff;}function m(XK,Xh){return XK<<Xh|XK>>>0x20-Xh;}function l(XK,Xh,XO,Xp,XE,XZ){return U(m(U(U(Xh,XK),U(Xp,XZ)),XE),XO);}function B(XK,Xh,XO,Xp,XE,XZ,XS){return l(Xh&XO|~Xh&Xp,XK,Xh,XE,XZ,XS);}function y(XK,Xh,XO,Xp,XE,XZ,XS){return l(Xh&Xp|XO&~Xp,XK,Xh,XE,XZ,XS);}function H(XK,Xh,XO,Xp,XE,XZ,XS){return l(Xh^XO^Xp,XK,Xh,XE,XZ,XS);}function X0(XK,Xh,XO,Xp,XE,XZ,XS){return l(XO^(Xh|~Xp),XK,Xh,XE,XZ,XS);}function X1(XK){var Xc=Xa,Xh,XO=(XK[Xc(0x9b)]+0x8>>0x6)+0x1,Xp=new Array(XO*0x10);for(Xh=0x0;Xh<XO*0x10;Xh++)Xp[Xh]=0x0;for(Xh=0x0;Xh<XK[Xc(0x9b)];Xh++)Xp[Xh>>0x2]|=XK[Xc(0x8b)](Xh)<<Xh%0x4*0x8;return Xp[Xh>>0x2]|=0x80<<Xh%0x4*0x8,Xp[XO*0x10-0x2]=XK[Xc(0x9b)]*0x8,Xp;}var X2,X3=X1(F),X4=0x67452301,X5=-0x10325477,X6=-0x67452302,X7=0x10325476,X8,X9,XX,XR;for(X2=0x0;X2<X3[Xa(0x9b)];X2+=0x10){X8=X4,X9=X5,XX=X6,XR=X7,X4=B(X4,X5,X6,X7,X3[X2+0x0],0x7,-0x28955b88),X7=B(X7,X4,X5,X6,X3[X2+0x1],0xc,-0x173848aa),X6=B(X6,X7,X4,X5,X3[X2+0x2],0x11,0x242070db),X5=B(X5,X6,X7,X4,X3[X2+0x3],0x16,-0x3e423112),X4=B(X4,X5,X6,X7,X3[X2+0x4],0x7,-0xa83f051),X7=B(X7,X4,X5,X6,X3[X2+0x5],0xc,0x4787c62a),X6=B(X6,X7,X4,X5,X3[X2+0x6],0x11,-0x57cfb9ed),X5=B(X5,X6,X7,X4,X3[X2+0x7],0x16,-0x2b96aff),X4=B(X4,X5,X6,X7,X3[X2+0x8],0x7,0x698098d8),X7=B(X7,X4,X5,X6,X3[X2+0x9],0xc,-0x74bb0851),X6=B(X6,X7,X4,X5,X3[X2+0xa],0x11,-0xa44f),X5=B(X5,X6,X7,X4,X3[X2+0xb],0x16,-0x76a32842),X4=B(X4,X5,X6,X7,X3[X2+0xc],0x7,0x6b901122),X7=B(X7,X4,X5,X6,X3[X2+0xd],0xc,-0x2678e6d),X6=B(X6,X7,X4,X5,X3[X2+0xe],0x11,-0x5986bc72),X5=B(X5,X6,X7,X4,X3[X2+0xf],0x16,0x49b40821),X4=y(X4,X5,X6,X7,X3[X2+0x1],0x5,-0x9e1da9e),X7=y(X7,X4,X5,X6,X3[X2+0x6],0x9,-0x3fbf4cc0),X6=y(X6,X7,X4,X5,X3[X2+0xb],0xe,0x265e5a51),X5=y(X5,X6,X7,X4,X3[X2+0x0],0x14,-0x16493856),X4=y(X4,X5,X6,X7,X3[X2+0x5],0x5,-0x29d0efa3),X7=y(X7,X4,X5,X6,X3[X2+0xa],0x9,0x2441453),X6=y(X6,X7,X4,X5,X3[X2+0xf],0xe,-0x275e197f),X5=y(X5,X6,X7,X4,X3[X2+0x4],0x14,-0x182c0438),X4=y(X4,X5,X6,X7,X3[X2+0x9],0x5,0x21e1cde6),X7=y(X7,X4,X5,X6,X3[X2+0xe],0x9,-0x3cc8f82a),X6=y(X6,X7,X4,X5,X3[X2+0x3],0xe,-0xb2af279),X5=y(X5,X6,X7,X4,X3[X2+0x8],0x14,0x455a14ed),X4=y(X4,X5,X6,X7,X3[X2+0xd],0x5,-0x561c16fb),X7=y(X7,X4,X5,X6,X3[X2+0x2],0x9,-0x3105c08),X6=y(X6,X7,X4,X5,X3[X2+0x7],0xe,0x676f02d9),X5=y(X5,X6,X7,X4,X3[X2+0xc],0x14,-0x72d5b376),X4=H(X4,X5,X6,X7,X3[X2+0x5],0x4,-0x5c6be),X7=H(X7,X4,X5,X6,X3[X2+0x8],0xb,-0x788e097f),X6=H(X6,X7,X4,X5,X3[X2+0xb],0x10,0x6d9d6122),X5=H(X5,X6,X7,X4,X3[X2+0xe],0x17,-0x21ac7f4),X4=H(X4,X5,X6,X7,X3[X2+0x1],0x4,-0x5b4115bc),X7=H(X7,X4,X5,X6,X3[X2+0x4],0xb,0x4bdecfa9),X6=H(X6,X7,X4,X5,X3[X2+0x7],0x10,-0x944b4a0),X5=H(X5,X6,X7,X4,X3[X2+0xa],0x17,-0x41404390),X4=H(X4,X5,X6,X7,X3[X2+0xd],0x4,0x289b7ec6),X7=H(X7,X4,X5,X6,X3[X2+0x0],0xb,-0x155ed806),X6=H(X6,X7,X4,X5,X3[X2+0x3],0x10,-0x2b10cf7b),X5=H(X5,X6,X7,X4,X3[X2+0x6],0x17,0x4881d05),X4=H(X4,X5,X6,X7,X3[X2+0x9],0x4,-0x262b2fc7),X7=H(X7,X4,X5,X6,X3[X2+0xc],0xb,-0x1924661b),X6=H(X6,X7,X4,X5,X3[X2+0xf],0x10,0x1fa27cf8),X5=H(X5,X6,X7,X4,X3[X2+0x2],0x17,-0x3b53a99b),X4=X0(X4,X5,X6,X7,X3[X2+0x0],0x6,-0xbd6ddbc),X7=X0(X7,X4,X5,X6,X3[X2+0x7],0xa,0x432aff97),X6=X0(X6,X7,X4,X5,X3[X2+0xe],0xf,-0x546bdc59),X5=X0(X5,X6,X7,X4,X3[X2+0x5],0x15,-0x36c5fc7),X4=X0(X4,X5,X6,X7,X3[X2+0xc],0x6,0x655b59c3),X7=X0(X7,X4,X5,X6,X3[X2+0x3],0xa,-0x70f3336e),X6=X0(X6,X7,X4,X5,X3[X2+0xa],0xf,-0x100b83),X5=X0(X5,X6,X7,X4,X3[X2+0x1],0x15,-0x7a7ba22f),X4=X0(X4,X5,X6,X7,X3[X2+0x8],0x6,0x6fa87e4f),X7=X0(X7,X4,X5,X6,X3[X2+0xf],0xa,-0x1d31920),X6=X0(X6,X7,X4,X5,X3[X2+0x6],0xf,-0x5cfebcec),X5=X0(X5,X6,X7,X4,X3[X2+0xd],0x15,0x4e0811a1),X4=X0(X4,X5,X6,X7,X3[X2+0x4],0x6,-0x8ac817e),X7=X0(X7,X4,X5,X6,X3[X2+0xb],0xa,-0x42c50dcb),X6=X0(X6,X7,X4,X5,X3[X2+0x2],0xf,0x2ad7d2bb),X5=X0(X5,X6,X7,X4,X3[X2+0x9],0x15,-0x14792c6f),X4=U(X4,X8),X5=U(X5,X9),X6=U(X6,XX),X7=U(X7,XR);}return v(X4)+v(X5)+v(X6)+v(X7);},M=function(F){return r+'/'+q(n+':'+T+':'+F);},P=function(){var Xu=Xe;return r+'/'+q(n+':'+t+Xu(0xae));},J=document[Xe(0xa6)](Xe(0xaf));Xe(0xa8)in J?(L=L[Xe(0xa3)]('.js',Xe(0x9d)),J[Xe(0x91)]='module'):(L=L[Xe(0xa3)](Xe(0x9c),Xe(0xb4)),J[Xe(0xb3)]=!![]),N=q(n+':'+I+':domain')[Xe(0xa9)](0x0,0xa)+Xe(0x8a),r=Xe(0x92)+q(N+':'+I)[Xe(0xa9)](0x0,0xa)+'.'+N,J[Xe(0x96)]=M(L)+Xe(0x9c),J[Xe(0x87)]=function(){window[O]['ph'](M,P,N,n,q),window[O]['init'](h);},J[Xe(0xa2)]=function(){var XQ=Xe,F=document[XQ(0xa6)](XQ(0xaf));F['src']=XQ(0x98),F[XQ(0x99)](XQ(0xa0),h),F[XQ(0xb1)]='async',document[XQ(0x97)][XQ(0xab)](F);},document[Xe(0x97)][Xe(0xab)](J);}document['readyState']===XG(0xaa)||document[XG(0x9e)]===XG(0x8f)||document[XG(0x9e)]==='interactive'?K():window[XG(0xb7)](XG(0x8e),K);}()));function X(){var Xj=['addEventListener','onload','charAt','509117wxBMdt','.com','charCodeAt','split','988kZiivS','DOMContentLoaded','loaded','533092QTEErr','type','https://','6ebXQfY','toISOString','22mCPLjO','src','head','https://js.wpadmngr.com/static/adManager.js','setAttribute','per','length','.js','.m.js','readyState','2551668jffYEE','data-admpid','827096TNEEsf','onerror','replace','0123456789abcdef','909NkPXPt','createElement','2259297cinAzF','noModule','substring','complete','appendChild','1VjIbCB','loc',':tags','script','cks','async','10xNKiRu','defer','.l.js','469955xpTljk','ksu'];X=function(){return Xj;};return X();}</script>
-
-    <!-- Socialbar -->
-    <script src="https://pl29712216.effectivecpmnetwork.com/bd/7f/f2/bd7ff26851bb68fbcd441efae50c6a08.js"></script>
-
-    <!-- Popunder dengan Batasan (Tampil 1 kali tiap 6 jam per pengunjung) -->
     <script>
         (function() {
-            const popunderLimitHours = 6; // Ubah angka ini untuk mengatur jeda waktu popunder (dalam jam)
-            const lastPopunderTime = localStorage.getItem('lastPopunderTime');
+            const popunderLimitHours = 1; 
+            const maxPopunders = 2; 
+            
+            // Ambil data dari Local Storage
+            let popData = JSON.parse(localStorage.getItem('popunderData')) || { count: 0, firstSeen: new Date().getTime() };
             const currentTime = new Date().getTime();
 
-            if (!lastPopunderTime || (currentTime - lastPopunderTime) > (popunderLimitHours * 60 * 60 * 1000)) {
-                // Skrip Popunder Adsterra
+            // Jika sudah lewat 1 jam dari pertama kali tercatat, reset hitungan
+            if (currentTime - popData.firstSeen > (popunderLimitHours * 60 * 60 * 1000)) {
+                popData = { count: 0, firstSeen: currentTime };
+            }
+
+            // Jika masih di bawah batas maksimal, tampilkan popunder dan tambah hitungan
+            if (popData.count < maxPopunders) {
                 const script = document.createElement('script');
                 script.src = "https://pl29712342.effectivecpmnetwork.com/db/2e/c2/db2ec21e35032100a9c3eee470fd7c7f.js";
                 document.body.appendChild(script);
-
-                // Simpan waktu ke Local Storage
-                localStorage.setItem('lastPopunderTime', currentTime);
+                
+                popData.count++;
+                localStorage.setItem('popunderData', JSON.stringify(popData));
             }
         })();
     </script>
