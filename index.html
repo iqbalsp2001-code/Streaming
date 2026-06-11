@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koleksi Video</title>
 
-    <!-- Iklan Banner (Wpadmngr) -->
+    <!-- Iklan Banner (Wpadmngr) - Ini yang kemungkinan memunculkan iklan video overlay milikmu -->
     <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442803"></script>
 
     <style>
@@ -41,7 +41,7 @@
         /* --- BATASAN IKLAN INPAGE AGAR TIDAK MENUTUPI PAGINATION --- */
         .inpage-ad-container { width: 100%; max-height: 120px; overflow: hidden; display: flex; justify-content: center; margin-top: 15px; }
 
-        /* --- HALAMAN NONTON --- */
+        /* --- HALAMAN NONTON & KOTAK PLAYER --- */
         #watch-view { display: none; padding-top: 20px; }
         .back-btn { display: inline-flex; align-items: center; color: #3b82f6; text-decoration: none; font-size: 14px; margin-bottom: 20px; font-weight: 600; }
         .back-btn:hover { text-decoration: underline; }
@@ -49,17 +49,24 @@
         .player-container { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); border: 2px solid #334155; }
         .watch-video-title { font-size: 20px; font-weight: 700; margin: 15px 0 5px 0; line-height: 1.4; }
 
-        /* --- OVERLAY GLOBAL FULL SCREEN (KEMBALI SEPERTI SEMULA) --- */
+        /* --- 1. OVERLAY GLOBAL FULL SCREEN (5 DETIK) --- */
         .global-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(5px); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; padding: 20px; text-align: center; }
         
-        .ad-close-btn { position: absolute; top: 20px; right: 20px; background-color: #3b82f6; color: #fff; border: none; padding: 10px 20px; font-size: 14px; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.2s; z-index: 10000; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        /* --- 2. OVERLAY KHUSUS BANNER DI MEDIA PLAYER (4 DETIK) --- */
+        .player-banner-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; text-align: center; }
+
+        /* --- TOMBOL CLOSE UMUM --- */
+        .ad-close-btn { background-color: #3b82f6; color: #fff; border: none; padding: 10px 20px; font-size: 14px; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.3); z-index: 10000; }
+        .global-close-pos { position: absolute; top: 20px; right: 20px; }
+        .player-close-pos { position: absolute; top: 10px; right: 10px; padding: 6px 12px; font-size: 12px; }
+        
         .ad-close-btn:disabled { background-color: #334155; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
         .ad-close-btn:hover:not(:disabled) { background-color: #2563eb; }
 
         .overlay-visual-cue { margin-bottom: 20px; color: #60a5fa; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; animation: pulseText 1.5s infinite; background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 25px; border: 1px solid #3b82f6; }
         @keyframes pulseText { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
 
-        .ad-box { width: 100%; max-width: 400px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: transparent; overflow: hidden; }
+        .ad-box { display: flex; justify-content: center; align-items: center; }
 
         /* --- TOMBOL SMARTLINK & DOWNLOAD --- */
         .btn-group { display: flex; flex-direction: column; gap: 12px; margin: 20px 0 30px 0; }
@@ -74,36 +81,17 @@
             .video-thumbnail-wrapper { width: 100%; min-width: 100%; }
             .video-info { padding: 10px; }
             .video-title { font-size: 14px; }
-            .smartlink-btn { padding: 14px 15px; font-size: 14px; }
-            .page-btn { padding: 8px 12px; font-size: 12px; }
-            .overlay-visual-cue { font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- LAPISAN OVERLAY GLOBAL (MUNCUL DI SELURUH HALAMAN) -->
+    <!-- 1. LAPISAN OVERLAY GLOBAL (5 DETIK) -->
+    <!-- Iklan video overlay dari sistemmu akan muncul tanpa tertimpa di sini -->
     <div id="global-video-overlay" class="global-ad-overlay">
-        <button id="close-ad-btn" class="ad-close-btn" disabled>Tunggu (8s)</button>
-        
+        <button id="close-global-btn" class="ad-close-btn global-close-pos" disabled>Tunggu (5s)</button>
         <div class="overlay-visual-cue">
             <span>⏳</span> Memuat Halaman... Tutup iklan untuk melanjutkan
-        </div>
-
-        <div class="ad-box">
-            <div id="tempat-iklan-js">
-                <!-- IKLAN BANNER 300x250 -->
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : '2c246c32fc6836e1b721bfe7b2c43ecf',
-                        'format' : 'iframe',
-                        'height' : 250,
-                        'width' : 300,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/2c246c32fc6836e1b721bfe7b2c43ecf/invoke.js"></script>
-            </div>
         </div>
     </div>
 
@@ -127,8 +115,30 @@
         <div id="watch-view">
             <a href="#home" class="back-btn">← Kembali ke Beranda</a>
             
+            <!-- KOTAK MEDIA PLAYER -->
             <div class="player-container">
+                
+                <!-- Layer Doodstream -->
                 <div id="player-wrapper" style="width:100%; height:100%;"></div>
+
+                <!-- 2. OVERLAY KHUSUS BANNER DI PLAYER (4 DETIK) -->
+                <div id="player-banner-layer" class="player-banner-overlay">
+                    <button id="close-player-btn" class="ad-close-btn player-close-pos" disabled>Tunggu (4s)</button>
+                    <div class="ad-box">
+                        <!-- IKLAN BANNER 300x250 DIKEMBALIKAN KE SINI -->
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : '2c246c32fc6836e1b721bfe7b2c43ecf',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="https://www.highperformanceformat.com/2c246c32fc6836e1b721bfe7b2c43ecf/invoke.js"></script>
+                    </div>
+                </div>
+
             </div>
 
             <h1 id="watch-title" class="watch-video-title">Judul Video</h1>
@@ -167,33 +177,58 @@
         let currentPage = 1;
         const videosPerPage = 5;
 
-        // FUNGSI OVERLAY GLOBAL
+        // FUNGSI OVERLAY GLOBAL (5 DETIK)
         function startGlobalAdTimer() {
             const overlay = document.getElementById('global-video-overlay');
-            const closeBtn = document.getElementById('close-ad-btn');
+            const closeBtn = document.getElementById('close-global-btn');
             
-            if(window.adInterval) clearInterval(window.adInterval);
+            if(window.globalAdInterval) clearInterval(window.globalAdInterval);
             
             overlay.style.display = 'flex';
             closeBtn.disabled = true;
             
-            let timeLeft = 8;
+            let timeLeft = 5;
             closeBtn.innerText = `Tunggu (${timeLeft}s)`;
 
-            window.adInterval = setInterval(() => {
+            window.globalAdInterval = setInterval(() => {
                 timeLeft--;
                 if (timeLeft > 0) {
                     closeBtn.innerText = `Tunggu (${timeLeft}s)`;
                 } else {
-                    clearInterval(window.adInterval);
+                    clearInterval(window.globalAdInterval);
                     closeBtn.innerText = "Tutup Iklan [X]";
                     closeBtn.disabled = false;
                 }
             }, 1000);
 
-            closeBtn.onclick = () => {
-                overlay.style.display = 'none'; 
-            };
+            closeBtn.onclick = () => { overlay.style.display = 'none'; };
+        }
+
+        // FUNGSI OVERLAY BANNER DI PLAYER (4 DETIK)
+        function startPlayerBannerTimer() {
+            const overlay = document.getElementById('player-banner-layer');
+            const closeBtn = document.getElementById('close-player-btn');
+            
+            if(window.playerAdInterval) clearInterval(window.playerAdInterval);
+            
+            overlay.style.display = 'flex';
+            closeBtn.disabled = true;
+            
+            let timeLeft = 4;
+            closeBtn.innerText = `Tunggu (${timeLeft}s)`;
+
+            window.playerAdInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) {
+                    closeBtn.innerText = `Tunggu (${timeLeft}s)`;
+                } else {
+                    clearInterval(window.playerAdInterval);
+                    closeBtn.innerText = "Tutup [X]";
+                    closeBtn.disabled = false;
+                }
+            }, 1000);
+
+            closeBtn.onclick = () => { overlay.style.display = 'none'; };
         }
 
         function renderVideos(containerElement, scrollToTopId) {
@@ -219,7 +254,7 @@
                 `;
                 containerElement.appendChild(videoLink);
 
-                // NATIVE BANNER ADSTERRA (Diantara Video)
+                // NATIVE BANNER ADSTERRA
                 const adWrapper = document.createElement('div');
                 adWrapper.style.margin = "15px 0"; adWrapper.style.width = "100%";
                 const adIframe = document.createElement('iframe');
@@ -302,6 +337,10 @@
                 currentPage = 1;
                 renderVideos(document.getElementById('video-list-watch'), 'watch-more-title');
                 window.scrollTo(0, 0);
+                
+                // Munculkan iklan banner di dalam kotak player (4 detik)
+                startPlayerBannerTimer();
+
             } else {
                 homeView.style.display = 'block';
                 watchView.style.display = 'none';
@@ -313,7 +352,7 @@
                 window.scrollTo(0, 0);
             }
 
-            // Panggil iklan overlay global setiap kali routing (buka awal, ke halaman nonton, dll)
+            // Panggil iklan overlay global setiap kali routing (5 detik)
             startGlobalAdTimer();
         }
 
