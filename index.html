@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koleksi Video</title>
 
+    <!-- Iklan Banner (Wpadmngr) -->
     <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442803"></script>
 
     <style>
-        /* --- KELOLA GAYA UTAMA WEB (CSS) --- */
+        /* --- KELOLA GAYA UTAMA WEB --- */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body { background-color: #0f172a; color: #f8fafc; padding-bottom: 50px; }
@@ -45,18 +46,17 @@
         .back-btn { display: inline-flex; align-items: center; color: #3b82f6; text-decoration: none; font-size: 14px; margin-bottom: 20px; font-weight: 600; }
         .back-btn:hover { text-decoration: underline; }
         
-        /* Kontainer Video & Overlay (Terkunci di Sini) */
         .player-container { position: relative; width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); border: 2px solid #334155; }
         .watch-video-title { font-size: 20px; font-weight: 700; margin: 15px 0 5px 0; line-height: 1.4; }
 
-        /* STRUKTUR CSS OVERLAY IKLAN */
-        .ad-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(3px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; padding: 20px; text-align: center; }
+        /* --- OVERLAY GLOBAL FULL SCREEN (KEMBALI SEPERTI SEMULA) --- */
+        .global-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(5px); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; padding: 20px; text-align: center; }
         
-        .ad-close-btn { position: absolute; top: 15px; right: 15px; background-color: #3b82f6; color: #fff; border: none; padding: 8px 16px; font-size: 13px; font-weight: 700; border-radius: 4px; cursor: pointer; transition: background 0.2s; z-index: 20; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .ad-close-btn { position: absolute; top: 20px; right: 20px; background-color: #3b82f6; color: #fff; border: none; padding: 10px 20px; font-size: 14px; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.2s; z-index: 10000; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .ad-close-btn:disabled { background-color: #334155; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
         .ad-close-btn:hover:not(:disabled) { background-color: #2563eb; }
 
-        .overlay-visual-cue { margin-bottom: 15px; color: #60a5fa; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; animation: pulseText 1.5s infinite; background: rgba(0,0,0,0.5); padding: 8px 16px; border-radius: 20px; border: 1px solid #3b82f6; }
+        .overlay-visual-cue { margin-bottom: 20px; color: #60a5fa; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; animation: pulseText 1.5s infinite; background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 25px; border: 1px solid #3b82f6; }
         @keyframes pulseText { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
 
         .ad-box { width: 100%; max-width: 400px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: transparent; overflow: hidden; }
@@ -76,11 +76,36 @@
             .video-title { font-size: 14px; }
             .smartlink-btn { padding: 14px 15px; font-size: 14px; }
             .page-btn { padding: 8px 12px; font-size: 12px; }
-            .overlay-visual-cue { font-size: 13px; }
+            .overlay-visual-cue { font-size: 14px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- LAPISAN OVERLAY GLOBAL (MUNCUL DI SELURUH HALAMAN) -->
+    <div id="global-video-overlay" class="global-ad-overlay">
+        <button id="close-ad-btn" class="ad-close-btn" disabled>Tunggu (8s)</button>
+        
+        <div class="overlay-visual-cue">
+            <span>⏳</span> Memuat Halaman... Tutup iklan untuk melanjutkan
+        </div>
+
+        <div class="ad-box">
+            <div id="tempat-iklan-js">
+                <!-- IKLAN BANNER 300x250 -->
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '2c246c32fc6836e1b721bfe7b2c43ecf',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="https://www.highperformanceformat.com/2c246c32fc6836e1b721bfe7b2c43ecf/invoke.js"></script>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         
@@ -104,29 +129,6 @@
             
             <div class="player-container">
                 <div id="player-wrapper" style="width:100%; height:100%;"></div>
-
-                <div id="video-ad-overlay" class="ad-overlay">
-                    <button id="close-ad-btn" class="ad-close-btn" disabled>Tunggu (8s)</button>
-                    
-                    <div class="overlay-visual-cue">
-                        <span>▶️</span> Memuat Video... Tutup iklan untuk memutar
-                    </div>
-
-                    <div class="ad-box">
-                        <div id="tempat-iklan-js">
-                            <script type="text/javascript">
-                                atOptions = {
-                                    'key' : '2c246c32fc6836e1b721bfe7b2c43ecf',
-                                    'format' : 'iframe',
-                                    'height' : 250,
-                                    'width' : 300,
-                                    'params' : {}
-                                };
-                            </script>
-                            <script type="text/javascript" src="https://www.highperformanceformat.com/2c246c32fc6836e1b721bfe7b2c43ecf/invoke.js"></script>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <h1 id="watch-title" class="watch-video-title">Judul Video</h1>
@@ -146,7 +148,6 @@
         const namaKoleksi = "Koleksi Video Saya";
         const deskripsiKoleksi = "Streaming lancar koleksi pilihan (Support DoodStream)";
 
-        // DATA VIDEO MENGGUNAKAN SHORTLINK OUO.IO
         const videoData = [
             { id: "vid-01", title: "Video Koleksi 1", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152324_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/q9g480u3uqcd", shortlink: "https://ouo.io/KQrcW7v" },
             { id: "vid-02", title: "Video Koleksi 2", thumbnail: "https://raw.githubusercontent.com/iqbalsp2001-code/Toktik-img/refs/heads/main/Screenshot_24-5-2026_152349_link.me-picsay.jpeg", doodstreamUrl: "https://playmogo.com/e/rbhsiqsfq5lm", shortlink: "https://ouo.io/AzIUr5X" },
@@ -166,23 +167,25 @@
         let currentPage = 1;
         const videosPerPage = 5;
 
-        // FUNGSI DURASI OVERLAY (DIUBAH MENJADI 8 DETIK)
-        function startAdTimer() {
-            const overlay = document.getElementById('video-ad-overlay');
+        // FUNGSI OVERLAY GLOBAL
+        function startGlobalAdTimer() {
+            const overlay = document.getElementById('global-video-overlay');
             const closeBtn = document.getElementById('close-ad-btn');
+            
+            if(window.adInterval) clearInterval(window.adInterval);
             
             overlay.style.display = 'flex';
             closeBtn.disabled = true;
             
-            let timeLeft = 8; // Durasi dikurangi menjadi 8 detik
+            let timeLeft = 8;
             closeBtn.innerText = `Tunggu (${timeLeft}s)`;
 
-            const countdown = setInterval(() => {
+            window.adInterval = setInterval(() => {
                 timeLeft--;
                 if (timeLeft > 0) {
                     closeBtn.innerText = `Tunggu (${timeLeft}s)`;
                 } else {
-                    clearInterval(countdown);
+                    clearInterval(window.adInterval);
                     closeBtn.innerText = "Tutup Iklan [X]";
                     closeBtn.disabled = false;
                 }
@@ -203,8 +206,8 @@
 
             paginatedVideos.forEach((video) => {
                 const videoLink = document.createElement('a');
-                videoLink.href = video.shortlink; // Arahkan klik ke Ouo.io
-                videoLink.target = "_self"; // Supaya redirect di tab yang sama (bisa diganti "_blank" jika mau tab baru)
+                videoLink.href = video.shortlink; 
+                videoLink.target = "_self"; 
                 videoLink.className = 'video-item';
                 videoLink.innerHTML = `
                     <div class="video-thumbnail-wrapper">
@@ -242,20 +245,20 @@
 
                 const prevBtn = document.createElement('button');
                 prevBtn.className = 'page-btn'; prevBtn.innerHTML = '&#8592; Back'; prevBtn.disabled = currentPage === 1;
-                prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); } };
+                prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); startGlobalAdTimer(); } };
                 paginationDiv.appendChild(prevBtn);
 
                 for (let i = 1; i <= totalPages; i++) {
                     const pageNumBtn = document.createElement('button');
                     pageNumBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
                     pageNumBtn.innerText = i;
-                    pageNumBtn.onclick = () => { currentPage = i; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); };
+                    pageNumBtn.onclick = () => { currentPage = i; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); startGlobalAdTimer(); };
                     paginationDiv.appendChild(pageNumBtn);
                 }
 
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'page-btn'; nextBtn.innerHTML = 'Next &#8594;'; nextBtn.disabled = currentPage === totalPages;
-                nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); } };
+                nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); startGlobalAdTimer(); } };
                 paginationDiv.appendChild(nextBtn);
                 containerElement.appendChild(paginationDiv);
             }
@@ -280,16 +283,11 @@
                     watchTitle.innerText = currentVideo.title;
                     document.title = currentVideo.title + " - " + namaKoleksi;
 
-                    // LOAD PLAYER DOODSTREAM
                     playerWrapper.innerHTML = `
                         <iframe src="${currentVideo.doodstreamUrl}" scrolling="no" frameborder="0" allowfullscreen="true" style="width:100%; height:100%; border:none;"></iframe>
                     `;
-
-                    // Jalankan Timer Overlay Iklan 8 Detik
-                    startAdTimer();
                 }
                 
-                // TOMBOL DOWNLOAD & SMARTLINK
                 document.getElementById('download-button-space').innerHTML = `
                     <div class="btn-group">
                         <a href="https://shrinkme.click/359VOQa" target="_blank" rel="noopener noreferrer" class="smartlink-btn btn-download">
@@ -314,27 +312,28 @@
                 renderVideos(document.getElementById('video-list-home'), 'top-section');
                 window.scrollTo(0, 0);
             }
+
+            // Panggil iklan overlay global setiap kali routing (buka awal, ke halaman nonton, dll)
+            startGlobalAdTimer();
         }
 
         window.addEventListener('hashchange', handleRouting);
         window.addEventListener('DOMContentLoaded', handleRouting);
     </script>
 
+    <!-- SISTEM PEMBATAS POPUNDER (2 KALI PER 1 JAM) -->
     <script>
         (function() {
             const popunderLimitHours = 1; 
             const maxPopunders = 2; 
             
-            // Ambil data dari Local Storage
             let popData = JSON.parse(localStorage.getItem('popunderData')) || { count: 0, firstSeen: new Date().getTime() };
             const currentTime = new Date().getTime();
 
-            // Jika sudah lewat 1 jam dari pertama kali tercatat, reset hitungan
             if (currentTime - popData.firstSeen > (popunderLimitHours * 60 * 60 * 1000)) {
                 popData = { count: 0, firstSeen: currentTime };
             }
 
-            // Jika masih di bawah batas maksimal, tampilkan popunder dan tambah hitungan
             if (popData.count < maxPopunders) {
                 const script = document.createElement('script');
                 script.src = "https://pl29712342.effectivecpmnetwork.com/db/2e/c2/db2ec21e35032100a9c3eee470fd7c7f.js";
