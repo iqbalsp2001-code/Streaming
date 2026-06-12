@@ -38,8 +38,9 @@
         .page-btn:hover:not(:disabled) { background-color: #334155; }
         .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* --- BATASAN IKLAN INPAGE --- */
-        .inpage-ad-container { width: 100%; display: flex; justify-content: center; margin-top: 15px; overflow: hidden; min-height: 50px; }
+        /* --- PENGATURAN KANDANG IKLAN ADSTERRA --- */
+        .ad-wrapper-box { width: 100%; max-height: 280px; margin: 20px 0; overflow: hidden; display: flex; justify-content: center; align-items: center; background-color: transparent; }
+        .ad-wrapper-box iframe { max-width: 100% !important; }
 
         /* --- HALAMAN NONTON & KOTAK PLAYER --- */
         #watch-view { display: none; padding-top: 20px; }
@@ -91,7 +92,6 @@
 <body>
 
     <!-- 1. LAPISAN OVERLAY GLOBAL (5 DETIK) -->
-    <!-- Iklan video overlay dari Wpadmngr (444566) di head akan memunculkan iklannya di atas layar ini -->
     <div id="global-video-overlay" class="global-ad-overlay">
         <button id="close-global-btn" class="ad-close-btn global-close-pos" disabled>Tunggu (5s)</button>
         <div class="overlay-visual-cue">
@@ -110,11 +110,6 @@
 
             <h2 class="video-section-title">Daftar Video Terbaru</h2>
             <div id="video-list-home" class="video-list"></div>
-            
-            <!-- 2. IKLAN INPAGE WPADMNGR -->
-            <div class="inpage-ad-container">
-                <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442789"></script>
-            </div>
         </div>
 
         <div id="watch-view">
@@ -156,11 +151,6 @@
 
             <h2 class="video-section-title" id="watch-more-title">Video Lainnya</h2>
             <div id="video-list-watch" class="video-list"></div>
-            
-            <!-- 2. IKLAN INPAGE WPADMNGR -->
-            <div class="inpage-ad-container">
-                <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442789"></script>
-            </div>
         </div>
 
     </div>
@@ -250,7 +240,7 @@
             const endIndex = startIndex + videosPerPage;
             const paginatedVideos = videoData.slice(startIndex, endIndex);
 
-            paginatedVideos.forEach((video) => {
+            paginatedVideos.forEach((video, index) => {
                 const videoLink = document.createElement('a');
                 videoLink.href = video.shortlink; 
                 videoLink.target = "_self"; 
@@ -265,24 +255,29 @@
                 `;
                 containerElement.appendChild(videoLink);
 
-                // NATIVE BANNER ADSTERRA DIANTARA VIDEO
-                const adWrapper = document.createElement('div');
-                adWrapper.style.margin = "15px 0"; adWrapper.style.width = "100%";
-                const adIframe = document.createElement('iframe');
-                adIframe.style.width = "100%"; adIframe.style.height = "180px"; 
-                adIframe.style.border = "none"; adIframe.style.overflow = "hidden"; adIframe.scrolling = "no";
-                adIframe.srcdoc = `
-                    <!DOCTYPE html>
-                    <html>
-                    <head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;}</style></head>
-                    <body>
-                        <script async="async" data-cfasync="false" src="https://pl29712215.effectivecpmnetwork.com/35a0dde7ed66473727dc3191f8350241/invoke.js"><\/script>
-                        <div id="container-35a0dde7ed66473727dc3191f8350241"></div>
-                    </body>
-                    </html>
-                `;
-                adWrapper.appendChild(adIframe);
-                containerElement.appendChild(adWrapper);
+                // NATIVE BANNER ADSTERRA - CUMA MUNCUL 1 KALI SETELAH VIDEO KEDUA
+                if (index === 1) {
+                    const adWrapper = document.createElement('div');
+                    adWrapper.className = 'ad-wrapper-box';
+                    const adIframe = document.createElement('iframe');
+                    adIframe.style.width = "100%"; 
+                    adIframe.style.height = "250px"; 
+                    adIframe.style.border = "none"; 
+                    adIframe.style.overflow = "hidden"; 
+                    adIframe.scrolling = "no";
+                    adIframe.srcdoc = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;}</style></head>
+                        <body>
+                            <script async="async" data-cfasync="false" src="https://pl29712215.effectivecpmnetwork.com/35a0dde7ed66473727dc3191f8350241/invoke.js"><\/script>
+                            <div id="container-35a0dde7ed66473727dc3191f8350241"></div>
+                        </body>
+                        </html>
+                    `;
+                    adWrapper.appendChild(adIframe);
+                    containerElement.appendChild(adWrapper);
+                }
             });
 
             if (totalPages > 1) {
@@ -394,6 +389,9 @@
             }
         })();
     </script>
+
+    <!-- 2. IKLAN IN-PAGE PUSH CLICKADILLA/WPADMNGR (CUKUP 1 KALI DI PALING BAWAH AGAR TIDAK NUMPUK) -->
+    <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442789"></script>
 
 </body>
 </html>
