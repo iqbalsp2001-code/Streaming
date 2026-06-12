@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koleksi Video</title>
 
-    <!-- 1. Iklan Video Overlay (Wpadmngr) -->
+    <!-- 1. Iklan Video Overlay Bawaan (Clickadilla) -->
     <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="444566"></script>
 
     <style>
@@ -38,7 +38,7 @@
         .page-btn:hover:not(:disabled) { background-color: #334155; }
         .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* --- PENGATURAN KANDANG IKLAN ADSTERRA --- */
+        /* --- PENGATURAN KANDANG IKLAN BANNER ADSTERRA --- */
         .ad-wrapper-box { width: 100%; max-height: 280px; margin: 20px 0; overflow: hidden; display: flex; justify-content: center; align-items: center; background-color: transparent; }
         .ad-wrapper-box iframe { max-width: 100% !important; }
 
@@ -53,23 +53,16 @@
         /* --- EDUKASI IKLAN DOODSTREAM --- */
         .doodstream-warning { background-color: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; padding: 12px 15px; margin: 15px 0; font-size: 13px; color: #cbd5e1; border-radius: 4px; line-height: 1.5; }
         .doodstream-warning strong { color: #60a5fa; }
-
-        /* --- 1. OVERLAY GLOBAL FULL SCREEN (5 DETIK) --- */
-        .global-ad-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(5px); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; padding: 20px; text-align: center; }
         
-        /* --- 2. OVERLAY KHUSUS BANNER DI MEDIA PLAYER (4 DETIK) --- */
+        /* --- OVERLAY KHUSUS BANNER DI MEDIA PLAYER (4 DETIK) --- */
         .player-banner-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; text-align: center; }
 
         /* --- TOMBOL CLOSE UMUM --- */
         .ad-close-btn { background-color: #3b82f6; color: #fff; border: none; padding: 10px 20px; font-size: 14px; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.3); z-index: 10000; }
-        .global-close-pos { position: absolute; top: 20px; right: 20px; }
         .player-close-pos { position: absolute; top: 10px; right: 10px; padding: 6px 12px; font-size: 12px; }
         
         .ad-close-btn:disabled { background-color: #334155; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
         .ad-close-btn:hover:not(:disabled) { background-color: #2563eb; }
-
-        .overlay-visual-cue { margin-bottom: 20px; color: #60a5fa; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; animation: pulseText 1.5s infinite; background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 25px; border: 1px solid #3b82f6; }
-        @keyframes pulseText { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
 
         .ad-box { display: flex; justify-content: center; align-items: center; }
 
@@ -87,17 +80,41 @@
             .video-info { padding: 10px; }
             .video-title { font-size: 14px; }
         }
+
+        /* --- FORCE OVERRIDE UNTUK IN-PAGE PUSH AGAR MASUK SYSTEM ANTRIAN KITA --- */
+        /* Menyembunyikan container asli Adsterra / Clickadilla secara default saat pertama kali render otomatis */
+        .managed-inpage-hidden {
+            display: none !important;
+        }
+        /* Style pembungkus tunggal buatan kita agar iklan rapi bertumpuk di atas */
+        #master-inpage-container {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            width: 90%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            pointer-events: none; /* Klik tembus ke bawah jika tidak ada iklan */
+        }
+        #master-inpage-container > * {
+            pointer-events: auto; /* Iklannya sendiri tetap bisa diklik */
+            margin: 0 auto !important;
+            position: relative !important;
+            top: unset !important;
+            left: unset !important;
+            transform: unset !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. LAPISAN OVERLAY GLOBAL (5 DETIK) -->
-    <div id="global-video-overlay" class="global-ad-overlay">
-        <button id="close-global-btn" class="ad-close-btn global-close-pos" disabled>Tunggu (5s)</button>
-        <div class="overlay-visual-cue">
-            <span>⏳</span> Memuat Halaman... Tutup iklan untuk melanjutkan
-        </div>
-    </div>
+    <!-- Container Master untuk Menampung 1 Iklan Teratas Hasil Filter -->
+    <div id="master-inpage-container"></div>
 
     <div class="container">
         
@@ -121,7 +138,7 @@
                 <!-- Layer Doodstream -->
                 <div id="player-wrapper" style="width:100%; height:100%;"></div>
 
-                <!-- 3. OVERLAY KHUSUS BANNER DI PLAYER (4 DETIK) -->
+                <!-- OVERLAY KHUSUS BANNER DI PLAYER (4 DETIK) -->
                 <div id="player-banner-layer" class="player-banner-overlay">
                     <button id="close-player-btn" class="ad-close-btn player-close-pos" disabled>Tunggu (4s)</button>
                     <div class="ad-box">
@@ -177,33 +194,6 @@
 
         let currentPage = 1;
         const videosPerPage = 5;
-
-        // FUNGSI OVERLAY GLOBAL (5 DETIK)
-        function startGlobalAdTimer() {
-            const overlay = document.getElementById('global-video-overlay');
-            const closeBtn = document.getElementById('close-global-btn');
-            
-            if(window.globalAdInterval) clearInterval(window.globalAdInterval);
-            
-            overlay.style.display = 'flex';
-            closeBtn.disabled = true;
-            
-            let timeLeft = 5;
-            closeBtn.innerText = `Tunggu (${timeLeft}s)`;
-
-            window.globalAdInterval = setInterval(() => {
-                timeLeft--;
-                if (timeLeft > 0) {
-                    closeBtn.innerText = `Tunggu (${timeLeft}s)`;
-                } else {
-                    clearInterval(window.globalAdInterval);
-                    closeBtn.innerText = "Tutup Iklan [X]";
-                    closeBtn.disabled = false;
-                }
-            }, 1000);
-
-            closeBtn.onclick = () => { overlay.style.display = 'none'; };
-        }
 
         // FUNGSI OVERLAY BANNER DI PLAYER (4 DETIK)
         function startPlayerBannerTimer() {
@@ -286,20 +276,20 @@
 
                 const prevBtn = document.createElement('button');
                 prevBtn.className = 'page-btn'; prevBtn.innerHTML = '&#8592; Back'; prevBtn.disabled = currentPage === 1;
-                prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); startGlobalAdTimer(); } };
+                prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); } };
                 paginationDiv.appendChild(prevBtn);
 
                 for (let i = 1; i <= totalPages; i++) {
                     const pageNumBtn = document.createElement('button');
                     pageNumBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
                     pageNumBtn.innerText = i;
-                    pageNumBtn.onclick = () => { currentPage = i; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); startGlobalAdTimer(); };
+                    pageNumBtn.onclick = () => { currentPage = i; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); };
                     paginationDiv.appendChild(pageNumBtn);
                 }
 
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'page-btn'; nextBtn.innerHTML = 'Next &#8594;'; nextBtn.disabled = currentPage === totalPages;
-                nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); startGlobalAdTimer(); } };
+                nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; renderVideos(containerElement, scrollToTopId); document.getElementById(scrollToTopId).scrollIntoView(); } };
                 paginationDiv.appendChild(nextBtn);
                 containerElement.appendChild(paginationDiv);
             }
@@ -357,9 +347,6 @@
                 renderVideos(document.getElementById('video-list-home'), 'top-section');
                 window.scrollTo(0, 0);
             }
-
-            // Panggil iklan overlay global setiap kali routing (5 detik)
-            startGlobalAdTimer();
         }
 
         window.addEventListener('hashchange', handleRouting);
@@ -390,9 +377,102 @@
         })();
     </script>
 
-    <!-- 2. IKLAN IN-PAGE PUSH CLICKADILLA/WPADMNGR (CUKUP 1 KALI DI PALING BAWAH AGAR TIDAK NUMPUK) -->
+
+    <!-- ========================================== -->
+    <!-- SLOTS UTAMA IKLAN IN-PAGE PUSH (MELAYANG)   -->
+    <!-- ========================================== -->
+    
+    <!-- SLOT 1: CLICKADILLA/WPADMNGR IN-PAGE -->
     <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="442789"></script>
+
+    <!-- SLOT 2: ADSTERRA IN-PAGE PUSH -->
+    <script async="async" data-cfasync="false" src="https://pl29712215.effectivecpmnetwork.com/35a0dde7ed66473727dc3191f8350241/invoke.js"></script>
+    <div id="container-35a0dde7ed66473727dc3191f8350241"></div>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT ENGINE: AUTO-ROTATION QUEUE SYSTEM -->
+    <!-- ========================================== -->
+    <script>
+        (function() {
+            let activeAd = null;
+
+            function manageInPagePushAds() {
+                // Selektor umum untuk mendeteksi container elemen iklan melayang milik Clickadilla / Adsterra
+                // Biasanya berupa div dengan posisi fixed / absolute bawaan skrip mereka
+                const selectors = [
+                    'div[style*="position: fixed"]', 
+                    'div[style*="position:fixed"]',
+                    'div[id*="admp"]',
+                    'div[class*="admp"]',
+                    '.sd-container',
+                    'div[style*="z-index: 2147483647"]'
+                ];
+
+                let allFoundAds = [];
+                selectors.forEach(selector => {
+                    document.querySelectorAll(selector).forEach(el => {
+                        // Jangan ambil master-container kita sendiri atau player overlay
+                        if (el.id !== 'master-inpage-container' && 
+                            el.id !== 'global-video-overlay' && 
+                            el.id !== 'player-banner-layer' && 
+                            !el.closest('#player-banner-layer') &&
+                            !el.classList.contains('ad-close-btn')) {
+                            allFoundAds.push(el);
+                        }
+                    });
+                });
+
+                // Filter unik agar elemen tidak terduplikasi dalam array pemeriksaan
+                allFoundAds = [...new Set(allFoundAds)];
+
+                allFoundAds.forEach(ad => {
+                    // Jika iklan ini belum diproses oleh sistem manajemen kita
+                    if (!ad.dataset.managedByQueue) {
+                        ad.dataset.managedByQueue = "true";
+                        // Sembunyikan dari tempat asalnya agar tidak berantakan meluber di layar
+                        ad.classList.add('managed-inpage-hidden');
+                        ad.style.setProperty('display', 'none', 'important');
+                    }
+                });
+
+                const masterContainer = document.getElementById('master-inpage-container');
+
+                // Jika saat ini tidak ada iklan yang sedang tampil, cari iklan antrean berikutnya
+                if (!activeAd || !document.body.contains(activeAd) || activeAd.style.display === 'none') {
+                    const nextAd = allFoundAds.find(ad => ad.classList.contains('managed-inpage-hidden'));
+
+                    if (nextAd) {
+                        activeAd = nextAd;
+                        // Keluarkan dari status tersembunyi
+                        activeAd.classList.remove('managed-inpage-hidden');
+                        activeAd.style.removeAttribute ? activeAd.style.removeAttribute('display') : activeAd.style.display = 'block';
+                        activeAd.style.setProperty('display', 'block', 'important');
+                        
+                        // Masukkan ke dalam wadah master tumpukan teratas kita
+                        masterContainer.appendChild(activeAd);
+
+                        // Jalankan durasi otomatis: Tutup otomatis setelah tepat 3 detik
+                        setTimeout(() => {
+                            if (activeAd && masterContainer.contains(activeAd)) {
+                                // Cari tombol close [X] bawaan iklan tersebut jika ada untuk memicu tracking close mereka
+                                const nativeCloseBtn = activeAd.querySelector('span[class*="close"], div[class*="close"], svg, button');
+                                if (nativeCloseBtn) {
+                                    nativeCloseBtn.click();
+                                }
+                                // Hapus dari layar demi memunculkan antrean berikutnya
+                                activeAd.remove();
+                                activeAd = null;
+                            }
+                        }, 3000); // Durasi tampil bergantian (3 Detik)
+                    }
+                }
+            }
+
+            // Jalankan scanner pengatur tumpukan secara berkala setiap 400 milidetik
+            setInterval(manageInPagePushAds, 400);
+        })();
+    </script>
 
 </body>
 </html>
-
